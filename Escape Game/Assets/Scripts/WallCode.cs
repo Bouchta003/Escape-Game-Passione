@@ -35,8 +35,27 @@ public class WallCode : MonoBehaviour
     }
     private void Update()
     {
-        //Checking if the puzzle is resolved (for test purposes the 'E' key is pressed)
-
-        //Assigning the Material to the bricks of the codeSequence
+        //Condition to verify if the necessary previous puzzles were completed, if they were show the code. (For testing purposes pressing 'E' key will trigger the code)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (_wall != null)
+            {
+                foreach (Transform child in _wall.transform)
+                {
+                    if (codeSequence.Contains(child.name))
+                    {
+                        Renderer renderer = child.GetComponent<Renderer>();
+                        if (renderer != null)
+                        {
+                            renderer.material = codeWallMaterial;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("_wall GameObject is not assigned in the inspector.");
+            }
+        }
     }
 }
