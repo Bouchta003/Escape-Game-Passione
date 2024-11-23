@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6587d6edc1ff74ca853112805c0dbb, type: 3}
   m_Name: Graphite
   m_EditorClassIdentifier: 
-  materialName: 
+  materialName: Graphite
   efficiency: 0
   capacity: 0
   safety: 0

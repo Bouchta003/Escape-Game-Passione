@@ -8,6 +8,7 @@ TagManager:
   - PlayerEyes
   - Door
   - MBS:Wall
+  - Material
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Interactable
   - 
   - 
   - 

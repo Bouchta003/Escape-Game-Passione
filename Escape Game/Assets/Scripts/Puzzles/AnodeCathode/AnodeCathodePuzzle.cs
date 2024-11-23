@@ -4,15 +4,32 @@ public class AnodeCathodePuzzle : MonoBehaviour
 {
     public MaterialData selectedAnode;
     public MaterialData selectedCathode;
+    public SlotDetector anodeSlot; // Reference to the anode slot
+    public SlotDetector cathodeSlot; // Reference to the cathode slot
+
     public GameObject unlockableDoor;
+
+    private void Update()
+    {
+        // Check if both slots are occupied
+        if (anodeSlot.isOccupied && cathodeSlot.isOccupied)
+        {
+            Debug.Log("Both materials are placed!");
+            CheckCombination();
+        }
+    }
 
     public void CheckCombination()
     {
-        if (selectedAnode != null && selectedCathode != null)
-        {
-            int performance = selectedAnode.efficiency + selectedCathode.efficiency;
+        // Get the materials placed in the slots
+        MaterialData anode = anodeSlot.detectedMaterial;
+        MaterialData cathode = cathodeSlot.detectedMaterial;
 
-            if (performance > 100) // Example threshold
+        if (anode != null && cathode != null)
+        {
+            int performance = anode.efficiency + cathode.efficiency;
+
+            if (anode.materialName == "Lithium" && cathode.materialName == "Manganese")
             {
                 Debug.Log("Correct Combination! Door Unlocks.");
                 UnlockDoor();

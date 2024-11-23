@@ -28,11 +28,8 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(rayOrigin, rayDirection, out hit, interactionRange, interactableLayer))
         {
-            if (hit.collider.CompareTag("Interactable"))
-            {
-                // Trigger the interaction logic
-                hit.collider.GetComponent<IInteractable>()?.Interact();
-            }
+            // Trigger the interaction logic
+            hit.collider.GetComponent<IInteractable>()?.Interact();
         }
     }
 }
