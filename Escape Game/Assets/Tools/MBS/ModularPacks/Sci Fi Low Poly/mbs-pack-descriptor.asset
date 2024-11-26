@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!49 &4900000
+TextAsset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mbs-pack-descriptor
+  m_Script: "{\n    \"guid\": \"12ddca7bf1b048c598d4a7ba73e1c8dc\",\n    \"_name\":
+    \"Sci Fi Low Poly\",\n    \"_wallGroups\": [\n        {\n            \"guid\":
+    \"c51b42219c9a4efcbb21f09b360a1177\",\n            \"name\": \"New Wall Group\",\n           
+    \"_modules\": [\n                {\n                    \"guid\": \"f7fd18e9bf0e42c78310616b5805ca10\",\n                   
+    \"name\": \"New Wall Module\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 101144,\n                           
+    \"guid\": \"8d76d7bf209da5b44a73507c804295d4\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        }\n    ],\n    \"_floorGroups\": [],\n    \"_decoratorGroups\":
+    [],\n    \"_decoratorCategories\": [\n        {\n            \"guid\": \"f71c39ea9ff84a8e97a86b003277a2c5\",\n           
+    \"_name\": \"All\"\n        }\n    ]\n}"
