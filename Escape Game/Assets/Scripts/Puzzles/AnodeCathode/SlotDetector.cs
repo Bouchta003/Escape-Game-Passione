@@ -4,15 +4,15 @@ public class SlotDetector : MonoBehaviour
 {
     [Header("Configuration")]
     [Tooltip("Tag used to identify valid materials.")]
-    [SerializeField] private string requiredTag = "Material"; // Tag for valid materials
+    [SerializeField] string requiredTag = "Material"; // Tag for valid materials
 
     [Header("Slot State")]
     [Tooltip("Indicates whether the slot is currently occupied.")]
-    private bool isOccupied = false;
+    bool isOccupied = false;
     public bool IsOccupied => isOccupied;
 
     [Tooltip("Reference to the detected material's data.")]
-    private MaterialData detectedMaterial;
+    MaterialData detectedMaterial;
     public MaterialData DetectedMaterial => detectedMaterial;
 
     void OnTriggerEnter(Collider other)

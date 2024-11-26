@@ -7,16 +7,16 @@ public class AnodeCathodePuzzle : MonoBehaviour
 
     [Header("Slot Detectors")]
     [Tooltip("Reference to the anode slot detector.")]
-    [SerializeField] private SlotDetector anodeSlot;
+    [SerializeField] SlotDetector anodeSlot;
 
     [Tooltip("Reference to the cathode slot detector.")]
-    [SerializeField] private SlotDetector cathodeSlot;
+    [SerializeField] SlotDetector cathodeSlot;
 
     [Header("Unlockable Door")]
     [Tooltip("The door to unlock upon solving the puzzle.")]
-    [SerializeField] private GameObject unlockableDoor;
+    [SerializeField] GameObject unlockableDoor;
 
-    private void Update()
+    void Update()
     {
         // Check if both slots are occupied
         if (anodeSlot.IsOccupied && cathodeSlot.IsOccupied)
