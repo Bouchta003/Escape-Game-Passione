@@ -66,7 +66,7 @@ public class MovementInput : MonoBehaviour
 
     void HandleCamera()
     {
-        // Get mouse input
+        // Get mouse input for rotation
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -77,13 +77,21 @@ public class MovementInput : MonoBehaviour
         verticalLookRotation -= mouseY;
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -30f, 60f); // Adjust these limits as needed
 
-        // Camera rotation
+        // Adjust camera distance based on mouse scroll
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        cameraDistance -= scrollInput * 2f; // Adjust zoom speed as needed
+        cameraDistance = Mathf.Clamp(cameraDistance, 2f, 10f); // Min and max zoom levels
+
+        // Set camera rotation
         cam.transform.rotation = Quaternion.Euler(verticalLookRotation, transform.eulerAngles.y, 0);
 
-        // Camera position (follows target, including vertical changes)
+        // Calculate desired camera position
         Vector3 cameraPosition = cameraTarget.position - cam.transform.forward * cameraDistance + Vector3.up * cameraHeight;
+
+        // Smoothly move camera to the desired position
         cam.transform.position = Vector3.Lerp(cam.transform.position, cameraPosition, Time.deltaTime * 10f); // Smooth follow
     }
+
 
 
     void PlayerMoveAndRotation()
