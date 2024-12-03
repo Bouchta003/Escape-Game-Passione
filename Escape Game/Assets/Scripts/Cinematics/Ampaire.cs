@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class Ampaire : MonoBehaviour
 {
-    private bool isLarge = false; // État initial : petit
     private RectTransform rectTransform;
+
+    // Référence au script TextAmpaire
+    public TextAmpaire textAmpaire;
 
     // Tailles pour les deux états
     public Vector2 smallSize = new Vector2(100, 100); // Taille "petit"
-    public Vector2 largeSize = new Vector2(150, 150); // Taille "grand"
+    public Vector2 largeSize = new Vector2(120, 120); // Taille "grand"
 
-    // Start is called before the first frame update
+    // Liste des indices des phrases qui déclenchent une taille "grande"
+    private HashSet<int> largeSizeMessages = new HashSet<int> { 0, 1, 2, 3, 4, 6, 7, 9, 10, 11, 12, 14 };
+
     void Start()
     {
         // Récupère le RectTransform de l'image
@@ -21,29 +25,29 @@ public class Ampaire : MonoBehaviour
         rectTransform.sizeDelta = smallSize;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Vérifie si l'utilisateur clique sur l'écran
-        if (Input.GetMouseButtonDown(0))
+        // Vérifie si le script TextAmpaire est défini
+        if (textAmpaire != null)
         {
-            ToggleSize();
+            // Obtenez l'indice actuel du message affiché depuis TextAmpaire
+            int currentMessageIndex = textAmpaire.GetCurrentIndex();
+
+            // Ajuste la taille en fonction de l'indice du message
+            ToggleSize(currentMessageIndex);
         }
     }
 
-    void ToggleSize()
+    void ToggleSize(int messageIndex)
     {
-        // Change la taille en fonction de l'état actuel
-        if (isLarge)
-        {
-            rectTransform.sizeDelta = smallSize; // Passe à petit
-        }
-        else
+        // Vérifie si l'indice du message est dans la liste des "grandes tailles"
+        if (largeSizeMessages.Contains(messageIndex))
         {
             rectTransform.sizeDelta = largeSize; // Passe à grand
         }
-
-        // Bascule l'état
-        isLarge = !isLarge;
+        else
+        {
+            rectTransform.sizeDelta = smallSize; // Passe à petit
+        }
     }
 }

@@ -4,46 +4,50 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour
 {
-    private bool isLarge = true; // État initial : petit
     private RectTransform rectTransform;
+
+    // Référence à un autre script ou système pour obtenir l'indice affiché (par exemple, un script de texte)
+    public TextAmpaire textAmpaire; // Script pour gérer le texte (ou autre logique)
 
     // Tailles pour les deux états
     public Vector2 smallSize = new Vector2(100, 100); // Taille "petit"
-    public Vector2 largeSize = new Vector2(150, 150); // Taille "grand"
+    public Vector2 largeSize = new Vector2(120, 120); // Taille "grand"
 
-    // Start is called before the first frame update
+    // Liste des indices qui déclenchent une taille "grande"
+    private HashSet<int> largeSizeMessages = new HashSet<int> { 5, 8, 13, 15 };
+
     void Start()
     {
         // Récupère le RectTransform de l'image
         rectTransform = GetComponent<RectTransform>();
 
-        // Définit la taille initiale (petite)
-        rectTransform.sizeDelta = largeSize;
+        // Définit la taille initiale
+        rectTransform.sizeDelta = smallSize;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Vérifie si l'utilisateur clique sur l'écran
-        if (Input.GetMouseButtonDown(0))
+        // Vérifie si le TextManager est défini
+        if (textAmpaire != null)
         {
-            ToggleSize();
+            // Obtenez l'indice actuel du message affiché depuis TextManager
+            int currentIndex = textAmpaire.GetCurrentIndex();
+
+            // Ajuste la taille en fonction de l'indice actuel
+            ToggleSize(currentIndex);
         }
     }
 
-    void ToggleSize()
+    void ToggleSize(int currentIndex)
     {
-        // Change la taille en fonction de l'état actuel
-        if (isLarge)
-        {
-            rectTransform.sizeDelta = smallSize; // Passe à petit
-        }
-        else
+        // Vérifie si l'indice actuel est dans la liste des "grandes tailles"
+        if (largeSizeMessages.Contains(currentIndex))
         {
             rectTransform.sizeDelta = largeSize; // Passe à grand
         }
-
-        // Bascule l'état
-        isLarge = !isLarge;
+        else
+        {
+            rectTransform.sizeDelta = smallSize; // Passe à petit
+        }
     }
 }
