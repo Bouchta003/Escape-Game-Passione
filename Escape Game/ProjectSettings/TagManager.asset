@@ -9,6 +9,7 @@ TagManager:
   - Door
   - MBS:Wall
   - Material
+  - Storable
   layers:
   - Default
   - TransparentFX
