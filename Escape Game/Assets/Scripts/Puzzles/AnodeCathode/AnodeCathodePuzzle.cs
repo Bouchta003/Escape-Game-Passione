@@ -2,28 +2,38 @@ using UnityEngine;
 
 public class AnodeCathodePuzzle : MonoBehaviour
 {
-    public MaterialData selectedAnode;
-    public MaterialData selectedCathode;
-    public SlotDetector anodeSlot; // Reference to the anode slot
-    public SlotDetector cathodeSlot; // Reference to the cathode slot
+    MaterialData selectedAnode;
+    MaterialData selectedCathode;
 
-    public GameObject unlockableDoor;
+    [Header("Slot Detectors")]
+    [Tooltip("Reference to the anode slot detector.")]
+    [SerializeField] SlotDetector anodeSlot;
 
-    private void Update()
+    [Tooltip("Reference to the cathode slot detector.")]
+    [SerializeField] SlotDetector cathodeSlot;
+
+    [Header("Unlockable Door")]
+    [Tooltip("The door to unlock upon solving the puzzle.")]
+    [SerializeField] GameObject unlockableDoor;
+
+    void Update()
     {
         // Check if both slots are occupied
-        if (anodeSlot.isOccupied && cathodeSlot.isOccupied)
+        if (anodeSlot.IsOccupied && cathodeSlot.IsOccupied)
         {
             Debug.Log("Both materials are placed!");
             CheckCombination();
         }
     }
 
+    /// <summary>
+    /// Checks the combination of materials in the slots and performs the appropriate action.
+    /// </summary>
     public void CheckCombination()
     {
         // Get the materials placed in the slots
-        MaterialData anode = anodeSlot.detectedMaterial;
-        MaterialData cathode = cathodeSlot.detectedMaterial;
+        MaterialData anode = anodeSlot.DetectedMaterial;
+        MaterialData cathode = cathodeSlot.DetectedMaterial;
 
         if (anode != null && cathode != null)
         {
@@ -45,8 +55,14 @@ public class AnodeCathodePuzzle : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unlocks the door using the assigned animation trigger.
+    /// </summary>
     void UnlockDoor()
     {
-        unlockableDoor.GetComponent<Animator>().SetTrigger("Unlock");
+        if (unlockableDoor != null)
+        {
+            if (unlockableDoor.TryGetComponent<Animator>(out var doorAnimator)) doorAnimator.SetTrigger("Unlock");
+        }
     }
 }
