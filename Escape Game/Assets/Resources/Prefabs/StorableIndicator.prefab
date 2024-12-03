@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7155928382215389727}
   - component: {fileID: 5197029374785894957}
   - component: {fileID: 9155713436360556632}
+  - component: {fileID: 2975094812507280244}
   m_Layer: 0
   m_Name: StorableIndicator
   m_TagString: Untagged
@@ -97,3 +98,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2975094812507280244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602557206348641401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796a8dca38895b848852ea2ed71981ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
