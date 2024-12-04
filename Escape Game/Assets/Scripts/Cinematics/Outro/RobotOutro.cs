@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot : MonoBehaviour
+public class RobotOutro : MonoBehaviour
 {
     private RectTransform rectTransform;
 
     // Référence à un autre script ou système pour obtenir l'indice affiché (par exemple, un script de texte)
-    public TextAmpaire textAmpaire; // Script pour gérer le texte (ou autre logique)
+    public TextOutro textOutro; // Script pour gérer le texte (ou autre logique)
 
     // Tailles pour les deux états
     public Vector2 smallSize = new Vector2(100, 100); // Taille "petit"
     public Vector2 largeSize = new Vector2(120, 120); // Taille "grand"
 
     // Liste des indices qui déclenchent une taille "grande"
-    private HashSet<int> largeSizeMessages = new HashSet<int> { 5, 8, 13, 15 };
+    private HashSet<int> largeSizeMessages = new HashSet<int> { 2, 4 };
 
     void Start()
     {
@@ -28,10 +28,10 @@ public class Robot : MonoBehaviour
     void Update()
     {
         // Vérifie si le TextManager est défini
-        if (textAmpaire != null)
+        if (textOutro != null)
         {
             // Obtenez l'indice actuel du message affiché depuis TextManager
-            int currentIndex = textAmpaire.GetCurrentIndex();
+            int currentIndex = textOutro.GetCurrentIndex();
 
             // Ajuste la taille en fonction de l'indice actuel
             ToggleSize(currentIndex);

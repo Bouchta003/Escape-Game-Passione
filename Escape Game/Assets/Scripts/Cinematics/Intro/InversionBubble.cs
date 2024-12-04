@@ -11,7 +11,7 @@ public class InversionBubble : MonoBehaviour
     public TextAmpaire textAmpaire;
 
     // Liste des indices qui déclenchent l'inversion
-    public List<int> flipIndices = new List<int> { 5, 8, 13, 15 };
+    public List<int> flipIndices = new List<int> { 6, 9, 14, 0 };
 
     // Valeur d'échelle initiale
     private Vector3 originalScale;

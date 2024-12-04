@@ -14,7 +14,7 @@ public class Ampaire : MonoBehaviour
     public Vector2 largeSize = new Vector2(120, 120); // Taille "grand"
 
     // Liste des indices des phrases qui déclenchent une taille "grande"
-    private HashSet<int> largeSizeMessages = new HashSet<int> { 0, 1, 2, 3, 4, 6, 7, 9, 10, 11, 12, 14 };
+    private HashSet<int> largeSizeMessages = new HashSet<int> { 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 15 };
 
     void Start()
     {

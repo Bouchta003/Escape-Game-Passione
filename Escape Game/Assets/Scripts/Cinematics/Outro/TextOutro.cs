@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TextAmpaire : MonoBehaviour
+public class TextOutro : MonoBehaviour
 {
     public TextMeshProUGUI uiText; // Référence au composant Text
     private string currentMessage = ""; // Stocke le message actuellement affiché
@@ -11,22 +11,12 @@ public class TextAmpaire : MonoBehaviour
 
     // Liste des textes à afficher
     private string[] messages = {
-        "Alright, Ampaire. Deep breaths.",
-        "They’re here to see the future, and you’ve got it… except I don’t have it.",
-        "Oh no, where’s the USB key?!",
-        "If it is not here, it must be in my laboratory!",
-        "Voltix, are you there? This is an emergency!",
-        "Ready for action, Master Ampaire! What seems to be the problem?",
-        "Voltix, my USB key… It’s not here!",
-        "I must have forgotten it in my laboratory, do you see it?",
-        "I know where it is, but I've forgotten the code for the chest.",
-        "What?! This is catastrophic! How could this have happened?!",
-        "Regardless, you must find the code and open the chest!",
-        "I left some clues to find it in the laboratory, but I don’t have time to help you.",
-        "You’ve got only 45 minutes before the presentation ends!",
-        "Piece of cake! No worries, I’ll handle it. Sit tight!",
-        "This is serious, Voltix. Don’t let me down.",
-        "Roger that! Mission: USB Key Recovery is a go!"
+        "... and that’s why this innovation is important...",
+        "Special delivery for Master Ampaire!",
+        "You’re a lifesaver, Voltix. I owe you one.",
+        "Just doing my job!",
+        "Ladies and gentlemen, let me show the future of innovation",
+        ""
     };
 
     public float typingSpeed = 0.05f; // Vitesse d'affichage des caractères
@@ -54,7 +44,13 @@ public class TextAmpaire : MonoBehaviour
         {
             StopCoroutine(typingCoroutine);
         }
-        if (currentIndex == 0)
+        // Met à jour le message et l'indice
+        currentMessage = messages[currentIndex];
+        typingCoroutine = StartCoroutine(TypeText(currentMessage));
+
+        // Passe à l'indice suivant, en cyclant si nécessaire
+        currentIndex = (currentIndex + 1) % messages.Length;
+        /*if (currentIndex == 0)
         {
             currentMessage = messages[currentIndex];
             typingCoroutine = StartCoroutine(TypeText(currentMessage));
@@ -66,7 +62,7 @@ public class TextAmpaire : MonoBehaviour
             currentIndex = (currentIndex + 1) % messages.Length; // Tourne dans la liste
             currentMessage = messages[currentIndex];
             typingCoroutine = StartCoroutine(TypeText(currentMessage));
-        }
+        }*/
     }
 
     IEnumerator TypeText(string text)
