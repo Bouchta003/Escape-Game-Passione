@@ -36,7 +36,7 @@ public class WallCode : MonoBehaviour
     private void Update()
     {
         //Condition to verify if the necessary previous puzzles were completed, if they were show the code. (For testing purposes pressing 'E' key will trigger the code)
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             if (_wall != null)
             {
