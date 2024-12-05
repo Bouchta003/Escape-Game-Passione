@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Nécessaire pour gérer les scènes
 using TMPro;
 
 public class TextAmpaire : MonoBehaviour
@@ -55,12 +56,20 @@ public class TextAmpaire : MonoBehaviour
         {
             StopCoroutine(typingCoroutine);
         }
+
+        // Vérifie si on est à la fin du tableau
+        if (currentIndex >= messages.Length - 1)
+        {
+            LoadNextScene(); // Change la scène
+            return;
+        }
+
         // Met à jour le message et l'indice
         currentMessage = messages[currentIndex];
         typingCoroutine = StartCoroutine(TypeText(currentMessage));
 
-        // Passe à l'indice suivant, en cyclant si nécessaire
-        currentIndex = (currentIndex + 1) % messages.Length;
+        // Passe à l'indice suivant
+        currentIndex++;
     }
 
     IEnumerator TypeText(string text)
@@ -89,6 +98,12 @@ public class TextAmpaire : MonoBehaviour
         }
 
         isTyping = false;
+    }
+
+    void LoadNextScene()
+    {
+        Debug.Log("Chargement de la scène suivante : Scene 1 (Index 1)");
+        SceneManager.LoadScene(1); // Charge la scène par son index (scène numéro 1)
     }
 
     // Fonction pour obtenir l'indice actuel
