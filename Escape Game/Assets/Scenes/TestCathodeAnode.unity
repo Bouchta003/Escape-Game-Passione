@@ -1244,6 +1244,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2528327074000149298, guid: 3f4814451272e874f9d7dc1534b22b63, type: 3}
   m_PrefabInstance: {fileID: 131203093}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &139588069 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6782773616935837423, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+  m_PrefabInstance: {fileID: 1855647362}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &143438386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2414,6 +2419,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &244748247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3231633480649472588, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+  m_PrefabInstance: {fileID: 1855647362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &244748252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244748247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b67657b4b7a0646962e730f4a39d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkColor: {r: 0, g: 0, b: 0, a: 1}
+  blinkSpeed: 1
+  isBlinking: 0
 --- !u!1001 &251634217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25372,6 +25397,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1639106270}
     m_Modifications:
+    - target: {fileID: 472071099398676336, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2189615671898821668, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -25416,15 +25445,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3231633480649472588, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+      propertyPath: m_TagString
+      value: Storable
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367451066149213547, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6782773616935837423, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
       propertyPath: m_Name
       value: USBKey_Metal
       objectReference: {fileID: 0}
     - target: {fileID: 6782773616935837423, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
-      propertyPath: m_TagString
-      value: Storable
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8829848977593079058, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8829848977593079058, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
+    - {fileID: 4367451066149213547, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cb606318345a3184fbf0a8dc62bc6a61, type: 3}
 --- !u!4 &1855647363 stripped
 Transform:
@@ -28125,6 +28168,7 @@ MonoBehaviour:
   keypadController: {fileID: 1911540722}
   correctCode: 704
   lockerAnimator: {fileID: 8316152590857357342}
+  lootUSBKey: {fileID: 139588069}
 --- !u!65 &8316152590857357346
 BoxCollider:
   m_ObjectHideFlags: 0

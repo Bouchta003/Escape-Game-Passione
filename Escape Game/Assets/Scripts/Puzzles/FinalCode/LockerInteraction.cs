@@ -28,6 +28,11 @@ public class LockerInteraction : MonoBehaviour, IInteractable
     [Tooltip("Animator for the locker.")]
     [SerializeField] private Animator lockerAnimator;
 
+    [Header("Puzzle Elements")]
+    [Tooltip("The USB Key to retrieve.")]
+    [SerializeField] private GameObject lootUSBKey;
+
+
     private bool isInteracting = false;
 
     private void Start()
@@ -91,6 +96,7 @@ public class LockerInteraction : MonoBehaviour, IInteractable
         if (lockerAnimator != null)
         {
             lockerAnimator.SetTrigger("LevelFinished");
+            lootUSBKey.SetActive(true);
         }
         else
         {
