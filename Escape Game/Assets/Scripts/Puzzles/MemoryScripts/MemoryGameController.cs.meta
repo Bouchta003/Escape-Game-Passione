@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1e4f47b027550ab4692f38c7502f148d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - boardPanel: {fileID: 7659921012351132064, guid: bc0db056c16adc34cb605a23bbe84c61, type: 3}
+  - supplyChainImage: {fileID: 94615224203777282, guid: 2b007b7b8005f3240bf3a1e5e530de04, type: 3}
+  - periodicTableImage: {fileID: 4817162615768437295, guid: 63ce46beabe33cf41b72ae5be6595618, type: 3}
+  - numberSequenceText: {fileID: 9198992048819712521, guid: c0f5fa8f593ce55439fff00685237cf6, type: 3}
+  - questionPanel: {fileID: 4845506921469384921, guid: 24aefb3b084a83543affc0ea8292ee9b, type: 3}
+  - questionText: {fileID: 9221303366510443435, guid: 355ae9d35619e584a86722c7f7192e88, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
