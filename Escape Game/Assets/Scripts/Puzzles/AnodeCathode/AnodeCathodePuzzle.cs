@@ -35,11 +35,15 @@ public class AnodeCathodePuzzle : MonoBehaviour
         MaterialData anode = anodeSlot.DetectedMaterial;
         MaterialData cathode = cathodeSlot.DetectedMaterial;
 
+
+        string anodeName = anode.materialName;
+        string cathodeName = cathode.materialName;
+
         if (anode != null && cathode != null)
         {
             int performance = anode.efficiency + cathode.efficiency;
 
-            if (anode.materialName == "Lithium" && cathode.materialName == "Manganese")
+            if (anodeName == "Graphite" && cathodeName == "Cobalt")
             {
                 Debug.Log("Correct Combination! Door Unlocks.");
                 UnlockDoor();

@@ -3,8 +3,8 @@ using UnityEngine;
 public class SlotDetector : MonoBehaviour
 {
     [Header("Configuration")]
-    [Tooltip("Tag used to identify valid materials.")]
-    [SerializeField] string requiredTag = "Material"; // Tag for valid materials
+    [Tooltip("String used to identify valid materials.")]
+    [SerializeField] string requiredNameComponent = "_Mat"; // Tag for valid materials
 
     [Header("Slot State")]
     [Tooltip("Indicates whether the slot is currently occupied.")]
@@ -18,7 +18,7 @@ public class SlotDetector : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the trigger has the required tag
-        if (other.CompareTag(requiredTag) && !isOccupied)
+        if (other.name.Contains(requiredNameComponent) && !isOccupied)
         {
             // Get the MaterialData from the object
             if (other.TryGetComponent<MaterialInteractable>(out var materialInteractable))
@@ -39,7 +39,7 @@ public class SlotDetector : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         // Reset if the material is removed
-        if (other.CompareTag(requiredTag) && isOccupied)
+        if (other.name.Contains(requiredNameComponent) && isOccupied)
         {
             // Clear the detected material and mark the slot as unoccupied
             detectedMaterial = null;
