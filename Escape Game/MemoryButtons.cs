@@ -16,4 +16,9 @@ public class MemoryButtons : MonoBehaviour
         blueButton.text = "Blue";
     }
 
+    public void ChangeText()
+    {
+        redButton.text = "Click !";
+    }
+
 }

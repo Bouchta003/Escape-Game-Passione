@@ -73,7 +73,7 @@ public class MemoryGameController : MonoBehaviour
         correctAnswerCount = 0;
 
         // Lancer le compte à rebours
-        StartCoroutine(CountdownThenShowTapToContinue(20)); // Compte à rebours de 20 secondes avant de masquer les images et afficher "TAP TO CONTINUE"
+        StartCoroutine(CountdownThenShowTapToContinue(25)); // Compte à rebours de 20 secondes avant de masquer les images et afficher "TAP TO CONTINUE"
 
         // Jouer le son de compte à rebours pendant 21 secondes
         if (audioSource != null && countdownClip != null)
@@ -81,7 +81,7 @@ public class MemoryGameController : MonoBehaviour
             audioSource.clip = countdownClip;
             audioSource.loop = true; // Boucle pour maintenir le son pendant 21 secondes
             audioSource.Play();
-            Invoke("StopCountdownSound", 21f); // Arrêter le son de compte à rebours après 21 secondes
+            Invoke("StopCountdownSound", 26f); // Arrêter le son de compte à rebours après 21 secondes
         }
     }
 
