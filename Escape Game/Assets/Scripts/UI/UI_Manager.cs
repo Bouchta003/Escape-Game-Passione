@@ -1,6 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using TMPro; // Import TextMeshPro namespace
 
 public class UI_Manager : MonoBehaviour
 {
@@ -10,14 +11,8 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject itemPrefab;
 
-    [SerializeField] Slot anodeSlot; // Reference to the Anode Slot UI
-    [SerializeField] Slot cathodeSlot; // Reference to the Cathode Slot UI
-
-    Slot activeSlot; // The slot that requested the inventory
-
     void Start()
     {
-        MaterialDatabase.InitializeDatabase(); // Automatically load materials
         pauseMenu.SetActive(false);
         inventoryMenu.SetActive(false);
     }
@@ -30,16 +25,10 @@ public class UI_Manager : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        if (!pauseMenu.activeSelf)
-        {
-            DisableCursor();
+        if (pauseMenu.activeSelf == false)
             Time.timeScale = 0;
-        }
         else
-        {
-            EnableCursor();
             Time.timeScale = 1;
-        }
 
         pauseMenu.SetActive(!pauseMenu.activeSelf);
     }
@@ -51,40 +40,31 @@ public class UI_Manager : MonoBehaviour
         if (inventoryMenu.activeSelf)
         {
             PopulateInventorySlots();
-            EnableCursor();
         }
-        else DisableCursor();
-    }
-
-    public void OpenInventoryForSlot(Slot slot)
-    {
-        activeSlot = slot; // Set the active slot
-        inventoryMenu.SetActive(true);
-        PopulateInventorySlots();
-        EnableCursor();
     }
 
     private void PopulateInventorySlots()
     {
         int slotIndex = 0;
 
-        // Clear existing buttons
-        foreach (Transform slot in inventorySlots.transform)
-        {
-            foreach (Transform child in slot.transform) Destroy(child.gameObject);
-        }
-
         // Loop through the inventory list
         foreach (string item in Player_Inventory.inventory)
         {
-
             // Get the corresponding slot
             if (slotIndex < inventorySlots.transform.childCount)
             {
                 Transform slot = inventorySlots.transform.GetChild(slotIndex);
 
                 // Instantiate the prefab in the slot
-                GameObject instantiatedItem = Instantiate(itemPrefab, slot.transform);
+                GameObject instantiatedItem = Instantiate(itemPrefab, slot.position, Quaternion.identity);
+                instantiatedItem.transform.SetParent(slot);
+
+                // Optionally reset local position/rotation/scale
+                instantiatedItem.transform.localPosition = Vector3.zero;
+                instantiatedItem.transform.localRotation = Quaternion.identity;
+                instantiatedItem.transform.localScale = Vector3.one;
+
+                // Assign the item's name or other details to the prefab
                 instantiatedItem.name = item;
 
                 // Set the text of the TextMeshPro component in the prefab
@@ -92,13 +72,6 @@ public class UI_Manager : MonoBehaviour
                 if (textComponent != null)
                 {
                     textComponent.text = item; // Set the item's name as the text
-                }
-
-                // Add functionality to assign the item to a slot when clicked
-                Button button = instantiatedItem.GetComponentInChildren<Button>();
-                if (button != null)
-                {
-                    button.onClick.AddListener(() => OnInventoryItemClicked(item));
                 }
 
                 slotIndex++;
@@ -109,44 +82,5 @@ public class UI_Manager : MonoBehaviour
                 break;
             }
         }
-    }
-
-    private void OnInventoryItemClicked(string itemName)
-    {
-        if (activeSlot == null)
-        {
-            Debug.LogError("No active slot to assign the item to!");
-            return;
-        }
-
-        // Get the MaterialData for the clicked item
-        MaterialData material = MaterialDatabase.GetMaterialData(itemName.Split('_')[0]);
-
-        // Assign the material to the active slot
-        activeSlot.AssignMaterial(material);
-
-        // Close the inventory
-        inventoryMenu.SetActive(false);
-
-        // Clear the active slot reference
-        activeSlot = null;
-    }
-
-    /// <summary>
-    /// Enables the cursor for user interaction.
-    /// </summary>
-    private void EnableCursor()
-    {
-        Cursor.lockState = CursorLockMode.None; // Unlock cursor
-        Cursor.visible = true; // Make cursor visible
-    }
-
-    /// <summary>
-    /// Disables the cursor to restore game control.
-    /// </summary>
-    private void DisableCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked; // Lock cursor
-        Cursor.visible = false; // Hide cursor
     }
 }
