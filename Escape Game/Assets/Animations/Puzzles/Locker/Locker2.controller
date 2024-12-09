@@ -64,7 +64,7 @@ AnimatorController:
   m_Name: Locker2
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: LevelFinished
+  - m_Name: levelFinished
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -167,7 +167,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LevelFinished
+    m_ConditionEvent: levelFinished
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2335105643940806207}
