@@ -12,22 +12,29 @@ public class TextAmpaire : MonoBehaviour
 
     // Liste des textes à afficher
     private string[] messages = {
-        "Alright, Ampaire. Deep breaths.",
-        "They’re here to see the future, and you’ve got it… except I don’t have it.",
-        "Oh no, where’s the USB key?!",
-        "If it is not here, it must be in my laboratory!",
-        "Voltix, are you there? This is an emergency!",
-        "Ready for action, Master Ampaire! What seems to be the problem?",
-        "Voltix, my USB key… It’s not here!",
-        "I must have forgotten it in my laboratory, do you see it?",
-        "I know where it is, but I've forgotten the code for the chest.",
-        "What?! This is catastrophic! How could this have happened?!",
-        "Regardless, you must find the code and open the chest!",
-        "I left some clues to find it in the laboratory, but I don’t have time to help you.",
-        "You’ve got only 45 minutes before the presentation ends!",
-        "Piece of cake! No worries, I’ll handle it. Sit tight!",
-        "This is serious, Voltix. Don’t let me down.",
-        "Roger that! Mission: USB Key Recovery is a go!",
+        "(speaking to herself) The future of sustainable energy depends on this.", //Ampaire
+        "Without that USB key, we’ll lose months—no, years of progress.", //Ampaire
+        "(chiming in with a mechanical but cheerful voice) Relax, Ampaire.", //Voltix
+        "I’m sure we’ll find it.", //Voltix
+        "After all, I’m programmed for optimization—and cracking tough mysteries is well within my algorithms!", //Voltix
+        "If only I were as confident as your circuits.", //Ampaire
+        "That USB key holds the blueprints for the enhanced technology.", //Ampaire
+        "Without it, my breakthrough… it’s just a concept. And the world… well, it’s waiting for results, not promises.", //Ampaire
+        "(nodding dramatically) Indeed!", //Voltix
+        "Plus, let’s not forget: encrypted secrets, potential threats, and… a ticking clock!", //Voltix
+        "How exciting!", //Voltix
+        "This isn’t a game, Voltix. Someone could have stolen it. Or worse, I could have… misplaced it.", //Ampaire
+        "Misplaced it? You, Ampaire the Genius? Impossible!", //Voltix
+        "Let’s not tarnish your impeccable reputation just yet. Let me access your task logs and retrace your steps.", //Voltix
+        "I already tried that. Everything’s a blur after the conference.", //Ampaire
+        "Too much stress. Too many people.", //Ampaire
+        "But I remember working late in the lab… and then… nothing.", //Ampaire
+        "A mystery worthy of our combined brilliance! Let’s solve it, step by step.", //Voltix
+        "Clues are everywhere, if we know where to look. The USB key can’t have gone far.", //Voltix
+        "You’re right. Time to stop worrying and start searching. Voltix, initiate search protocols. ", //Ampaire
+        "Scan for anomalies in the lab first. If we don’t find anything here, we’ll expand to the conference hall.", //Ampaire
+        "Consider it done. And don’t worry, Ampaire. With your brain and my circuits, nothing stays lost for long.", //Voltix
+        "Let’s hope you’re right. The world’s watching us, Voltix. We can’t let them down.", //Ampaire
         ""
     };
 
