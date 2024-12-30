@@ -12,11 +12,17 @@ public class TextOutro : MonoBehaviour
 
     // Liste des textes à afficher
     private string[] messages = {
-        "... and that’s why this innovation is important...",
-        "Special delivery for Master Ampaire!",
-        "You’re a lifesaver, Voltix. I owe you one.",
-        "Just doing my job!",
-        "Ladies and gentlemen, let me show the future of innovation",
+        "We did it! The USB key is safe. All the data—everything we need to revolutionize energy storage—it’s all here.", //Ampaire
+        "Victory dance activated! You’ve saved the day, Ampaire… and with just 35 seconds to spare.", //Voltix
+        "(laughing) Close calls seem to be our specialty.", //Ampaire
+        "But I couldn’t have done this without you… or without the help of our team of problem-solvers.", //Ampaire
+        "That’s right!", //Voltix
+        "To everyone who helped us along the way—your sharp eyes, quick thinking, and determination made all the difference.", //Voltix
+        "You’re as much a part of this breakthrough as we are!", //Voltix
+        "(nodding) Together, we’ve ensured that this technology will reach the world. A brighter, more sustainable future is now within our grasp.", //Ampaire
+        "(dramatically) And… the next adventure awaits! After all, what’s innovation without a little intrigue?", //Voltix
+        "Let’s not get ahead of ourselves, Voltix. For now, let’s focus on what comes next: securing the data and moving forward with the project.", //Ampaire
+        "But… if another mystery comes our way, I know exactly who I’ll call for help.", //Ampaire
         ""
     };
 
