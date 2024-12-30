@@ -105,7 +105,7 @@ public class TextOutro : MonoBehaviour
     void LoadNextScene()
     {
         Debug.Log("Chargement de la scène suivante : Scene 1 (Index 1)");
-        SceneManager.LoadScene(6); // Charge la scène par son index (scène numéro 1)
+        SceneManager.LoadScene(5); // Charge la scène par son index (scène numéro 1)
     }
 
     // Fonction pour obtenir l'indice actuel
