@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Nécessaire pour gérer les scènes
 using TMPro;
 
 public class TextOutro : MonoBehaviour
@@ -44,6 +45,14 @@ public class TextOutro : MonoBehaviour
         {
             StopCoroutine(typingCoroutine);
         }
+
+        // Vérifie si on est à la fin du tableau
+        if (currentIndex >= messages.Length - 1)
+        {
+            LoadNextScene(); // Change la scène
+            return;
+        }
+
         // Met à jour le message et l'indice
         currentMessage = messages[currentIndex];
         typingCoroutine = StartCoroutine(TypeText(currentMessage));
@@ -91,6 +100,12 @@ public class TextOutro : MonoBehaviour
         }
 
         isTyping = false;
+    }
+
+    void LoadNextScene()
+    {
+        Debug.Log("Chargement de la scène suivante : Scene 1 (Index 1)");
+        SceneManager.LoadScene(6); // Charge la scène par son index (scène numéro 1)
     }
 
     // Fonction pour obtenir l'indice actuel
