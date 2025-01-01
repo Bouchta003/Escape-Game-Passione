@@ -10,6 +10,7 @@ TagManager:
   - MBS:Wall
   - Material
   - Storable
+  - Stored
   layers:
   - Default
   - TransparentFX

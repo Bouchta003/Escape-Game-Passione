@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class UI_Hover : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] GameObject slots;
+    [SerializeField] GameObject HoverDisplay;
     void Start()
     {
         
