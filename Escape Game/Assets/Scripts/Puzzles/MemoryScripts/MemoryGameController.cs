@@ -28,13 +28,13 @@ public class MemoryGameController : MonoBehaviour
 
     // Liste des questions et des réponses
     private string[] questions = {
-        "What number do you get from adding the height and the width of the battery shown?",
+        "What were the height and width of the battery shown?",
         "In which stage are the cell manufacturers within the supply chain?",
         "What is the atomic number of Nickel?"
     };
 
     private string[][] answers = {
-        new string[] { "94.7", "90.7", "42.7" },
+        new string[] { "61.5 and 33.2", "63.2 and 9.5", "61.5 and 9.5" },
         new string[] { "3rd", "4th", "2nd" },
         new string[] { "14", "28", "7" }
     };
