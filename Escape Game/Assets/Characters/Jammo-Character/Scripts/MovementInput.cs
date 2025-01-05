@@ -1,34 +1,36 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//This script requires you to have setup your animator with 3 parameters, "InputMagnitude", "InputX", "InputZ"
-//With a blend tree to control the inputmagnitude and allow blending between animations.
 [RequireComponent(typeof(CharacterController))]
-public class MovementInput : MonoBehaviour {
-
+public class MovementInput : MonoBehaviour
+{
     public float Velocity;
-    [Space]
+    public float InputX;
+    public float InputZ;
+    public Vector3 desiredMoveDirection;
+    public float desiredRotationSpeed = 0.1f;
+    public Animator anim;
+    public float Speed;
+    public float allowPlayerRotation = 0.1f;
+    public Camera cam;
+    public CharacterController controller;
+    public bool isGrounded;
 
-	public float InputX;
-	public float InputZ;
-	public Vector3 desiredMoveDirection;
-	public bool blockRotationPlayer;
-	public float desiredRotationSpeed = 0.1f;
-	public Animator anim;
-	public float Speed;
-	public float allowPlayerRotation = 0.1f;
-	public Camera cam;
-	public CharacterController controller;
-	public bool isGrounded;
+    [Header("Camera Settings")]
+    public float mouseSensitivity = 100f;
+    public float cameraDistance = 5f;
+    public float cameraHeight = 2f;
+    public Transform cameraTarget;
+
+    private float verticalLookRotation;
 
     [Header("Animation Smoothing")]
     [Range(0, 1f)]
     public float HorizontalAnimSmoothTime = 0.2f;
     [Range(0, 1f)]
     public float VerticalAnimTime = 0.2f;
-    [Range(0,1f)]
+    [Range(0, 1f)]
     public float StartAnimTime = 0.3f;
     [Range(0, 1f)]
     public float StopAnimTime = 0.15f;
@@ -36,16 +38,18 @@ public class MovementInput : MonoBehaviour {
     public float verticalVel;
     private Vector3 moveVector;
 
-	// Use this for initialization
-	void Start () {
-		anim = this.GetComponent<Animator> ();
-		cam = Camera.main;
-		controller = this.GetComponent<CharacterController> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		InputMagnitude ();
+    void Start()
+    {
+        anim = this.GetComponent<Animator>();
+        cam = Camera.main;
+        controller = this.GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Update()
+    {
+        HandleCamera();
+        InputMagnitude();
 
         isGrounded = controller.isGrounded;
         if (isGrounded)
@@ -58,67 +62,76 @@ public class MovementInput : MonoBehaviour {
         }
         moveVector = new Vector3(0, verticalVel * .2f * Time.deltaTime, 0);
         controller.Move(moveVector);
-
-
     }
 
-    void PlayerMoveAndRotation() {
-		InputX = Input.GetAxis ("Horizontal");
-		InputZ = Input.GetAxis ("Vertical");
-
-		var camera = Camera.main;
-		var forward = cam.transform.forward;
-		var right = cam.transform.right;
-
-		forward.y = 0f;
-		right.y = 0f;
-
-		forward.Normalize ();
-		right.Normalize ();
-
-		desiredMoveDirection = forward * InputZ + right * InputX;
-
-		if (blockRotationPlayer == false) {
-			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (desiredMoveDirection), desiredRotationSpeed);
-            controller.Move(desiredMoveDirection * Time.deltaTime * Velocity);
-		}
-	}
-
-    public void LookAt(Vector3 pos)
+    void HandleCamera()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(pos), desiredRotationSpeed);
+        // Get mouse input for rotation
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        // Rotate camera target (horizontal rotation)
+        transform.Rotate(Vector3.up * mouseX);
+
+        // Adjust vertical rotation (clamped)
+        verticalLookRotation -= mouseY;
+        verticalLookRotation = Mathf.Clamp(verticalLookRotation, -30f, 60f); // Adjust these limits as needed
+
+        // Adjust camera distance based on mouse scroll
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        cameraDistance -= scrollInput * 2f; // Adjust zoom speed as needed
+        cameraDistance = Mathf.Clamp(cameraDistance, 2f, 10f); // Min and max zoom levels
+
+        // Set camera rotation
+        cam.transform.rotation = Quaternion.Euler(verticalLookRotation, transform.eulerAngles.y, 0);
+
+        // Calculate desired camera position
+        Vector3 cameraPosition = cameraTarget.position - cam.transform.forward * cameraDistance + Vector3.up * cameraHeight;
+
+        // Smoothly move camera to the desired position
+        cam.transform.position = Vector3.Lerp(cam.transform.position, cameraPosition, Time.deltaTime * 10f); // Smooth follow
     }
 
-    public void RotateToCamera(Transform t)
-    {
 
-        var camera = Camera.main;
+
+    void PlayerMoveAndRotation()
+    {
+        InputX = Input.GetAxis("Horizontal");
+        InputZ = Input.GetAxis("Vertical");
+
         var forward = cam.transform.forward;
         var right = cam.transform.right;
 
-        desiredMoveDirection = forward;
+        forward.y = 0f;
+        right.y = 0f;
 
-        t.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), desiredRotationSpeed);
+        forward.Normalize();
+        right.Normalize();
+
+        desiredMoveDirection = forward * InputZ + right * InputX;
+
+        if (desiredMoveDirection.magnitude > 0)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), desiredRotationSpeed);
+            controller.Move(desiredMoveDirection * Time.deltaTime * Velocity);
+        }
     }
 
-	void InputMagnitude() {
-		//Calculate Input Vectors
-		InputX = Input.GetAxis ("Horizontal");
-		InputZ = Input.GetAxis ("Vertical");
+    void InputMagnitude()
+    {
+        InputX = Input.GetAxis("Horizontal");
+        InputZ = Input.GetAxis("Vertical");
 
-		//anim.SetFloat ("InputZ", InputZ, VerticalAnimTime, Time.deltaTime * 2f);
-		//anim.SetFloat ("InputX", InputX, HorizontalAnimSmoothTime, Time.deltaTime * 2f);
+        Speed = new Vector2(InputX, InputZ).sqrMagnitude;
 
-		//Calculate the Input Magnitude
-		Speed = new Vector2(InputX, InputZ).sqrMagnitude;
-
-        //Physically move player
-
-		if (Speed > allowPlayerRotation) {
-			anim.SetFloat ("Blend", Speed, StartAnimTime, Time.deltaTime);
-			PlayerMoveAndRotation ();
-		} else if (Speed < allowPlayerRotation) {
-			anim.SetFloat ("Blend", Speed, StopAnimTime, Time.deltaTime);
-		}
-	}
+        if (Speed > allowPlayerRotation)
+        {
+            anim.SetFloat("Blend", Speed, StartAnimTime, Time.deltaTime);
+            PlayerMoveAndRotation();
+        }
+        else if (Speed < allowPlayerRotation)
+        {
+            anim.SetFloat("Blend", Speed, StopAnimTime, Time.deltaTime);
+        }
+    }
 }
