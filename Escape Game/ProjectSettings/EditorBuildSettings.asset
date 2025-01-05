@@ -5,21 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/SlimUI/Modern Menu 1/Scenes/Demos/Demo1Scene2.unity
     guid: 4c89c579092f70744885e7d9f6baba7f
   - enabled: 1
-    path: Assets/Scenes/TestCathodeAnode.unity
-    guid: b2527ee51dcde6a45be4355a34019b22
+    path: Assets/Scenes/MainMenu.unity
+    guid: faf5cc0b2816dd549b6e1297c8a40aa5
   - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: 39bb568bf6bba304b91699ad61f880ad
   - enabled: 1
+    path: Assets/Scenes/TestCathodeAnode.unity
+    guid: b2527ee51dcde6a45be4355a34019b22
+  - enabled: 1
     path: Assets/Scenes/Outro.unity
     guid: 23b31fa3c31e32a40b84a8ef960fd953
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: faf5cc0b2816dd549b6e1297c8a40aa5
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: bb488b005b9970f49ac821c9d3b2392f
