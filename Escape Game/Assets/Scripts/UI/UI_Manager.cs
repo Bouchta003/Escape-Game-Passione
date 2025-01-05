@@ -31,19 +31,20 @@ public class UI_Manager : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        if (!pauseMenu.activeSelf)
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+
+        if (pauseMenu.activeSelf)
         {
-            DisableCursor();
+            EnableCursor();
             Time.timeScale = 0;
         }
         else
         {
-            EnableCursor();
+            DisableCursor();
             Time.timeScale = 1;
         }
-
-        pauseMenu.SetActive(!pauseMenu.activeSelf);
     }
+
 
     public void ToggleInventoryMenu()
     {
