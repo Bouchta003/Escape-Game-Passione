@@ -10,6 +10,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] GameObject inspectPanel;
+    [SerializeField] TextMeshProUGUI descriptionSlot;
     
     [SerializeField] Slot anodeSlot; // Reference to the Anode Slot UI
     [SerializeField] Slot cathodeSlot; // Reference to the Cathode Slot UI
@@ -107,6 +108,7 @@ public class UI_Manager : MonoBehaviour
                 hoverScript.inspectPanel = inspectPanel; // Reference to your inspect panel
                 hoverScript.inspectImage = inspectPanel.GetComponent<Image>();
                 hoverScript.itemSprite = itemSprite; // Pass the item's sprite
+                hoverScript.Description = descriptionSlot;
 
                 // Add functionality to assign the item to a slot when clicked
                 Button button = instantiatedItem.GetComponentInChildren<Button>();
