@@ -1918,7 +1918,7 @@ GameObject:
   - component: {fileID: 4757836856755875626}
   m_Layer: 0
   m_Name: Jammo_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2042,7 +2042,6 @@ MonoBehaviour:
   InputX: 0
   InputZ: 0
   desiredMoveDirection: {x: 0, y: 0, z: 0}
-  blockRotationPlayer: 0
   desiredRotationSpeed: 0.3
   anim: {fileID: 0}
   Speed: 0
@@ -2050,6 +2049,10 @@ MonoBehaviour:
   cam: {fileID: 0}
   controller: {fileID: 0}
   isGrounded: 0
+  mouseSensitivity: 100
+  cameraDistance: 5
+  cameraHeight: 2
+  cameraTarget: {fileID: 0}
   HorizontalAnimSmoothTime: 0.2
   VerticalAnimTime: 0.2
   StartAnimTime: 0.3

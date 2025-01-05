@@ -8,7 +8,7 @@ public class MemoryGameController : MonoBehaviour
     public Image supplyChainImage; // Image de la chaîne d'approvisionnement
     public Image periodicTableImage; // Image du tableau périodique
     public Image numberSequenceImage; // Nouvelle référence pour la séquence de nombres (en tant qu'image)
-    public Image inutile1; // Image inutile 1 qui doit disparaître
+    //public Image inutile1; // Image inutile 1 qui doit disparaître
     public Image inutile2; // Image inutile 2 qui doit disparaître
 
     public TextMeshProUGUI countdownText; // Référence au texte du compte à rebours
@@ -25,6 +25,10 @@ public class MemoryGameController : MonoBehaviour
 
     private int currentQuestionIndex = 0; // Pour suivre quelle question est affichée
     private int correctAnswerCount = 0; // Compte le nombre de bonnes réponses
+    private int selectedButtonIndex = 0; // Index du bouton actuellement sélectionné
+    private bool canContinue = false; // Indique si le joueur peut continuer
+
+
 
     // Liste des questions et des réponses
     private string[] questions = {
@@ -34,7 +38,7 @@ public class MemoryGameController : MonoBehaviour
     };
 
     private string[][] answers = {
-        new string[] { "61.5 and 33.2", "63.2 and 9.5", "61.5 and 9.5" },
+        new string[] { "61.5  and  33.2", "63.2  and  9.5", "61.5  and  9.5" },
         new string[] { "3rd", "4th", "2nd" },
         new string[] { "14", "28", "7" }
     };
@@ -53,6 +57,7 @@ public class MemoryGameController : MonoBehaviour
 
         // Initialiser l'état des éléments UI
         tapToContinueText.gameObject.SetActive(false); // Désactiver le texte "Tap to Continue" au début
+        canContinue = true; // Permettre au joueur de continuer avec la barre d'espace
         tapToContinueText.GetComponent<Button>().interactable = false; // Désactiver l'interaction
 
         // Désactiver les boutons de réponse au début
@@ -65,7 +70,7 @@ public class MemoryGameController : MonoBehaviour
         supplyChainImage.enabled = true;
         periodicTableImage.enabled = true;
         numberSequenceImage.enabled = true;
-        inutile1.enabled = true; // Activer l'image inutile1 au début
+        //inutile1.enabled = true; // Activer l'image inutile1 au début
         inutile2.enabled = true; // Activer l'image inutile2 au début
 
         // Réinitialiser le score et l'index de la question
@@ -114,7 +119,7 @@ public class MemoryGameController : MonoBehaviour
         supplyChainImage.enabled = false;
         periodicTableImage.enabled = false;
         numberSequenceImage.enabled = false;
-        inutile1.enabled = false; // Masquer l'image inutile1 après le compte à rebours
+        //inutile1.enabled = false; // Masquer l'image inutile1 après le compte à rebours
         inutile2.enabled = false; // Masquer l'image inutile2 après le compte à rebours
 
         // Activer le texte "TAP TO CONTINUE" après que les images ont disparu
@@ -132,6 +137,52 @@ public class MemoryGameController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        // Navigation avec les flèches gauche et droite
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            selectedButtonIndex = (selectedButtonIndex - 1 + answerButtons.Length) % answerButtons.Length; // Boucle vers le dernier bouton si on va à gauche
+            HighlightButton(selectedButtonIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            selectedButtonIndex = (selectedButtonIndex + 1) % answerButtons.Length; // Boucle vers le premier bouton si on va à droite
+            HighlightButton(selectedButtonIndex);
+        }
+
+        // Validation avec Enter ou la barre d’espace
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        {
+            answerButtons[selectedButtonIndex].onClick.Invoke(); // Simule un clic sur le bouton sélectionné
+        }
+
+        //vérification dans Update pour détecter si le joueur appuie sur la barre d'espace
+        if (canContinue && Input.GetKeyDown(KeyCode.Space))
+        {
+            OnTapToContinue(); // Appelle la méthode pour continuer
+            canContinue = false; // Désactive la capacité de continuer pour éviter les doublons
+        }
+    }
+
+    private void HighlightButton(int index)
+    {
+        // Réinitialiser l'état des boutons (désactiver la surbrillance)
+        for (int i = 0; i < answerButtons.Length; i++)
+        {
+            ColorBlock cb = answerButtons[i].colors;
+            cb.normalColor = Color.white; // Couleur par défaut
+            answerButtons[i].colors = cb;
+        }
+
+        // Appliquer une couleur de surbrillance au bouton sélectionné
+        ColorBlock selectedColorBlock = answerButtons[index].colors;
+        selectedColorBlock.normalColor = Color.yellow; // Couleur de surbrillance
+        answerButtons[index].colors = selectedColorBlock;
+    }
+
+
+
     void StopCountdownSound()
     {
         if (audioSource.isPlaying)
@@ -142,18 +193,21 @@ public class MemoryGameController : MonoBehaviour
 
     void OnTapToContinue()
     {
-        Debug.Log("Tap to Continue clicked!"); // Vérifie que cette méthode est bien appelée
+        Debug.Log("Tap to Continue activated!"); // Vérification dans la console
 
-        // Désactiver l'interaction après l'appui
-        tapToContinueText.GetComponent<Button>().interactable = false;
+        tapToContinueText.gameObject.SetActive(false); // Masquer le texte "Tap to Continue"
+        tapToContinueText.GetComponent<Button>().interactable = false; // Désactiver l'interaction
+        canContinue = false; // Réinitialiser le flag
 
-        // Utiliser `tapToContinueText` pour afficher la question suivante
+        // Afficher la prochaine question ou passer à l'étape suivante
         ShowQuestion(currentQuestionIndex);
     }
 
     void ShowQuestion(int questionIndex)
     {
         Debug.Log("ShowQuestion called for question index: " + questionIndex); // Vérifie que ShowQuestion est bien appelée
+
+        HighlightButton(selectedButtonIndex);
 
         tapToContinueText.gameObject.SetActive(true);
         tapToContinueText.text = questions[questionIndex];
