@@ -110,7 +110,7 @@ public class TextAmpaire : MonoBehaviour
     void LoadNextScene()
     {
         Debug.Log("Chargement de la scène suivante : Scene 1 (Index 1)");
-        SceneManager.LoadScene(1); // Charge la scène par son index (scène numéro 1)
+        SceneManager.LoadScene(2); // Charge la scène par son index (scène numéro 1)
     }
 
     // Fonction pour obtenir l'indice actuel
