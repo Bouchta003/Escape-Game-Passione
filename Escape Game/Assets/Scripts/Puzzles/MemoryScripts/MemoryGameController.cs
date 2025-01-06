@@ -11,10 +11,15 @@ public class MemoryGameController : MonoBehaviour
     //public Image inutile1; // Image inutile 1 qui doit disparaître
     public Image inutile2; // Image inutile 2 qui doit disparaître
 
+    public GameObject[] panels; // Un tableau pour contenir vos panels
+
+
     public TextMeshProUGUI countdownText; // Référence au texte du compte à rebours
     public TextMeshProUGUI tapToContinueText; // Texte "Tap to Continue", qui sera ensuite utilisé pour afficher les questions
     public Button[] answerButtons; // Boutons pour les réponses
     public TMP_FontAsset bangersFont; // Référence à la police "Bangers-Regular SDF" que vous utilisez
+    public TMP_FontAsset digitalFont; // Police pour le compte à rebours
+
 
     public AudioClip countdownClip; // Clip audio pour le compte à rebours
     public AudioClip yayClip; // Clip audio pour la fin du quiz
@@ -39,7 +44,7 @@ public class MemoryGameController : MonoBehaviour
 
     private string[][] answers = {
         new string[] { "61.5  and  33.2", "63.2  and  9.5", "61.5  and  9.5" },
-        new string[] { "3rd", "4th", "2nd" },
+        new string[] { "2nd", "4th", "3rd" },
         new string[] { "14", "28", "7" }
     };
 
@@ -70,24 +75,14 @@ public class MemoryGameController : MonoBehaviour
         supplyChainImage.enabled = true;
         periodicTableImage.enabled = true;
         numberSequenceImage.enabled = true;
-        //inutile1.enabled = true; // Activer l'image inutile1 au début
         inutile2.enabled = true; // Activer l'image inutile2 au début
 
         // Réinitialiser le score et l'index de la question
         currentQuestionIndex = 0;
         correctAnswerCount = 0;
 
-        // Lancer le compte à rebours
-        StartCoroutine(CountdownThenShowTapToContinue(25)); // Compte à rebours de 20 secondes avant de masquer les images et afficher "TAP TO CONTINUE"
-
-        // Jouer le son de compte à rebours pendant 21 secondes
-        if (audioSource != null && countdownClip != null)
-        {
-            audioSource.clip = countdownClip;
-            audioSource.loop = true; // Boucle pour maintenir le son pendant 21 secondes
-            audioSource.Play();
-            Invoke("StopCountdownSound", 26f); // Arrêter le son de compte à rebours après 21 secondes
-        }
+        // Afficher un message initial avant le compte à rebours
+        StartCoroutine(DisplayMessageThenStartCountdown());
     }
 
     private void SetTextProperties()
@@ -99,28 +94,98 @@ public class MemoryGameController : MonoBehaviour
         tapToContinueText.fontStyle = FontStyles.Normal; // Peut être Normal, Bold, Italic, etc.
     }
 
-    IEnumerator CountdownThenShowTapToContinue(int countdownTime)
+    private void SetCountdownTextProperties(TMP_FontAsset font, float fontSize, Color color)
     {
-        // Activer le texte du compte à rebours
+        countdownText.font = font; // Changer la police
+        countdownText.fontSize = fontSize; // Changer la taille
+        countdownText.color = color; // Changer la couleur
+    }
+
+    IEnumerator DisplayTextDynamically(string message, TMP_FontAsset font, float fontSize, Color color, float delayBetweenWords)
+    {
+        // Configurer le texte
+        SetCountdownTextProperties(font, fontSize, color); // Appliquer la police, la taille et la couleur
+        countdownText.gameObject.SetActive(true); // Activer le texte
+
+        // Découper la phrase en mots
+        string[] words = message.Split(' ');
+
+        // Réinitialiser le texte
+        countdownText.text = "";
+
+        // Afficher chaque mot avec un délai
+        foreach (string word in words)
+        {
+            countdownText.text += word + " "; // Ajouter le mot au texte actuel
+            yield return new WaitForSeconds(delayBetweenWords); // Attendre avant d'afficher le mot suivant
+        }
+    }
+
+
+    IEnumerator DisplayMessageThenStartCountdown()
+    {
+        // Afficher le message initial dynamiquement (mot par mot)
+        yield return StartCoroutine(DisplayTextDynamically(
+            "Watch the following images carefully", // Message à afficher
+            digitalFont, // Police Digital
+            42, // Taille de la police
+            Color.white, // Couleur
+            0.5f // Délai entre chaque mot (en secondes)
+        ));
+
+        // Attendre un instant après que le message complet soit affiché
+        yield return new WaitForSeconds(2f);
+
+        // Masquer le texte
+        countdownText.gameObject.SetActive(false);
+
+        // Démarrer le compte à rebours
+        yield return StartCoroutine(StartCountdown(25)); // Compte à rebours de 25 secondes
+    }
+
+
+    IEnumerator StartCountdown(int countdownTime)
+    {
+        // Configurer le texte pour le compte à rebours
+        SetCountdownTextProperties(digitalFont, 42, countdownText.color); // Police Digital, taille 42
         countdownText.gameObject.SetActive(true);
+
+        // Lancer le son de compte à rebours
+        if (audioSource != null && countdownClip != null)
+        {
+            audioSource.clip = countdownClip;
+            audioSource.loop = true; // Faire boucler le son si nécessaire
+            audioSource.Play(); // Jouer le son
+        }
 
         // Lancer le compte à rebours
         while (countdownTime > 0)
         {
-            countdownText.text = "Time remaining: " + countdownTime + " seconds";
+            countdownText.text = "Time Left : " + countdownTime + " seconds";
             yield return new WaitForSeconds(1f);
             countdownTime--;
         }
 
-        // Désactiver le texte du compte à rebours une fois terminé
+        // Arrêter le son de compte à rebours après la fin
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
+        // Masquer le texte du compte à rebours une fois terminé
         countdownText.gameObject.SetActive(false);
 
         // Masquer les images une fois le compte à rebours terminé
         supplyChainImage.enabled = false;
         periodicTableImage.enabled = false;
         numberSequenceImage.enabled = false;
-        //inutile1.enabled = false; // Masquer l'image inutile1 après le compte à rebours
-        inutile2.enabled = false; // Masquer l'image inutile2 après le compte à rebours
+        inutile2.enabled = false;
+
+        // Masquer les panels en même temps que les images
+        foreach (GameObject panel in panels)
+        {
+            panel.SetActive(false); // Désactiver les panels
+        }
 
         // Activer le texte "TAP TO CONTINUE" après que les images ont disparu
         tapToContinueText.gameObject.SetActive(true);
@@ -136,6 +201,7 @@ public class MemoryGameController : MonoBehaviour
             tapButton.onClick.AddListener(OnTapToContinue);
         }
     }
+
 
     private void Update()
     {
