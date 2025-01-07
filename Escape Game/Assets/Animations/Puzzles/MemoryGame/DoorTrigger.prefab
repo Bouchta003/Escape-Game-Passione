@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3095524726863798340}
   - component: {fileID: 3095524726863798363}
   - component: {fileID: 3095524726863798362}
+  - component: {fileID: 881154561}
   m_Layer: 0
   m_Name: DoorTrigger
   m_TagString: Untagged
@@ -44,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.1249774, y: 4.0249386, z: 1.2040895}
-  m_Center: {x: 0.042123318, y: 1.5124695, z: 0.10204477}
+  m_Size: {x: 4.4111032, y: 4.0249386, z: 1.2040895}
+  m_Center: {x: -0.07795321, y: 1.5124695, z: 0.10204477}
 --- !u!114 &3095524726863798362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,3 +60,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleMemoCanvas: {fileID: 0}
+--- !u!114 &881154561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095524726863798341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c447ff0a06e62754daac90ec5d037a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spotLight: {fileID: 0}
+  puzzleUI: {fileID: 0}
+  playerTag: Player
