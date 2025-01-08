@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +48,58 @@ public class Robot : MonoBehaviour
         else
         {
             rectTransform.sizeDelta = smallSize; // Passe à petit
+        }
+    }
+}
+*/
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Robot : MonoBehaviour
+{
+    // Référence au script qui gère l'affichage du texte
+    public TextAmpaire textAmpaire;
+
+    // Référence au composant Image (ou SpriteRenderer pour des objets 2D)
+    private Image image;
+
+    // Liste des indices qui déclenchent l'apparition de l'image
+    private HashSet<int> visibleMessages = new HashSet<int> { 3, 4, 5, 9, 10, 11, 13, 14, 18, 19, 22 };
+
+    void Start()
+    {
+        // Récupère le composant Image
+        image = GetComponent<Image>();
+
+        // Cache l'image au démarrage
+        if (image != null)
+        {
+            image.enabled = false;
+        }
+    }
+
+    void Update()
+    {
+        // Vérifie si TextAmpaire est défini
+        if (textAmpaire != null)
+        {
+            // Obtenez l'indice actuel du message affiché depuis TextAmpaire
+            int currentIndex = textAmpaire.GetCurrentIndex();
+
+            // Ajuste la visibilité en fonction de l'indice actuel
+            ToggleVisibility(currentIndex);
+        }
+    }
+
+    void ToggleVisibility(int currentIndex)
+    {
+        // Affiche ou cache l'image sans désactiver l'objet complet
+        if (image != null)
+        {
+            image.enabled = visibleMessages.Contains(currentIndex);
         }
     }
 }

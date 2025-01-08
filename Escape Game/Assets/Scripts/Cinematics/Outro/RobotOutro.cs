@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +48,58 @@ public class RobotOutro : MonoBehaviour
         else
         {
             rectTransform.sizeDelta = smallSize; // Passe à petit
+        }
+    }
+}
+*/
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class RobotOutro : MonoBehaviour
+{
+    // Référence au script TextOutro
+    public TextOutro textOutro;
+
+    // Référence au composant Image
+    private Image image;
+
+    // Liste des indices des phrases qui déclenchent l'apparition de l'image
+    private HashSet<int> visibleMessages = new HashSet<int> { 2, 5, 6, 7, 9 };
+
+    void Start()
+    {
+        // Récupère le composant Image
+        image = GetComponent<Image>();
+
+        // Cache l'image au démarrage
+        if (image != null)
+        {
+            image.enabled = false;
+        }
+    }
+
+    void Update()
+    {
+        // Vérifie si le script TextOutro est défini
+        if (textOutro != null)
+        {
+            // Obtenez l'indice actuel du message affiché depuis TextOutro
+            int currentIndex = textOutro.GetCurrentIndex();
+
+            // Ajuste la visibilité en fonction de l'indice actuel
+            ToggleVisibility(currentIndex);
+        }
+    }
+
+    void ToggleVisibility(int currentIndex)
+    {
+        // Affiche ou cache l'image sans désactiver l'objet complet
+        if (image != null)
+        {
+            image.enabled = visibleMessages.Contains(currentIndex);
         }
     }
 }

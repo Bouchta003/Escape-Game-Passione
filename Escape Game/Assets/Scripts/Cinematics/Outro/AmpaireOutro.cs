@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +48,58 @@ public class AmpaireOutro : MonoBehaviour
         else
         {
             rectTransform.sizeDelta = smallSize; // Passe à petit
+        }
+    }
+}
+*/
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class AmpaireOutro : MonoBehaviour
+{
+    // Référence au script TextOutro
+    public TextOutro textOutro;
+
+    // Référence au composant Image
+    private Image image;
+
+    // Liste des indices des phrases qui déclenchent l'apparition de l'image
+    private HashSet<int> visibleMessages = new HashSet<int> { 1, 3, 4, 8, 10, 11 };
+
+    void Start()
+    {
+        // Récupère le composant Image
+        image = GetComponent<Image>();
+
+        // Cache l'image au démarrage
+        if (image != null)
+        {
+            image.enabled = false;
+        }
+    }
+
+    void Update()
+    {
+        // Vérifie si le script TextOutro est défini
+        if (textOutro != null)
+        {
+            // Obtenez l'indice actuel du message affiché depuis TextOutro
+            int currentMessageIndex = textOutro.GetCurrentIndex();
+
+            // Ajuste la visibilité en fonction de l'indice du message
+            ToggleVisibility(currentMessageIndex);
+        }
+    }
+
+    void ToggleVisibility(int messageIndex)
+    {
+        // Affiche ou cache l'image sans désactiver complètement l'objet
+        if (image != null)
+        {
+            image.enabled = visibleMessages.Contains(messageIndex);
         }
     }
 }

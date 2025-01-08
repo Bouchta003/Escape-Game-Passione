@@ -12,15 +12,15 @@ public class TextAmpaire : MonoBehaviour
 
     // Liste des textes à afficher
     private string[] messages = {
-        "(speaking to herself) The future of sustainable energy depends on this.", //Ampaire
+        "The future of sustainable energy depends on this.", //Ampaire
         "Without that USB key, we’ll lose months—no, years of progress.", //Ampaire
-        "(chiming in with a mechanical but cheerful voice) Relax, Ampaire.", //Voltix
+        "Relax, Ampaire.", //Voltix
         "I’m sure we’ll find it.", //Voltix
         "After all, I’m programmed for optimization—and cracking tough mysteries is well within my algorithms!", //Voltix
         "If only I were as confident as your circuits.", //Ampaire
         "That USB key holds the blueprints for the enhanced technology.", //Ampaire
         "Without it, my breakthrough… it’s just a concept. And the world… well, it’s waiting for results, not promises.", //Ampaire
-        "(nodding dramatically) Indeed!", //Voltix
+        "Indeed!", //Voltix
         "Plus, let’s not forget: encrypted secrets, potential threats, and… a ticking clock!", //Voltix
         "How exciting!", //Voltix
         "This isn’t a game, Voltix. Someone could have stolen it. Or worse, I could have… misplaced it.", //Ampaire

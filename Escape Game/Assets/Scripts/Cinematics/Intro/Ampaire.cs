@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +48,57 @@ public class Ampaire : MonoBehaviour
         else
         {
             rectTransform.sizeDelta = smallSize; // Passe à petit
+        }
+    }
+}
+*/
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Ampaire : MonoBehaviour
+{
+    // Référence au script TextAmpaire
+    public TextAmpaire textAmpaire;
+
+    // Référence au composant Image (ou SpriteRenderer)
+    private Image image;
+
+    // Liste des indices des phrases qui déclenchent l'apparition de l'image
+    private HashSet<int> visibleMessages = new HashSet<int> { 1, 2, 6, 7, 8, 12, 15, 16, 17, 20, 21, 23 };
+
+    void Start()
+    {
+        // Récupère le composant Image
+        image = GetComponent<Image>();
+
+        // Cache l'image au démarrage
+        if (image != null)
+        {
+            image.enabled = false;
+        }
+    }
+
+    void Update()
+    {
+        // Vérifie si le script TextAmpaire est défini
+        if (textAmpaire != null)
+        {
+            // Obtenez l'indice actuel du message affiché depuis TextAmpaire
+            int currentMessageIndex = textAmpaire.GetCurrentIndex();
+
+            // Ajuste la visibilité en fonction de l'indice du message
+            ToggleVisibility(currentMessageIndex);
+        }
+    }
+
+    void ToggleVisibility(int messageIndex)
+    {
+        // Affiche ou cache l'image sans désactiver tout l'objet
+        if (image != null)
+        {
+            image.enabled = visibleMessages.Contains(messageIndex);
         }
     }
 }
