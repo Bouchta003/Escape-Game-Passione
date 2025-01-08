@@ -24121,75 +24121,75 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8460331774885123526, guid: f1fae1d6675e8c5489a7b530acc07f50, type: 3}
   m_PrefabInstance: {fileID: 7095929221142631719}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3095524727449833547
+--- !u!1001 &2070902011344527055
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 58397434}
     m_Modifications:
-    - target: {fileID: 881154561, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
-      propertyPath: puzzleUI
-      value: 
-      objectReference: {fileID: 1653383041}
-    - target: {fileID: 881154561, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
-      propertyPath: spotLight
-      value: 
-      objectReference: {fileID: 1093736049}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.31
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.49
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalPosition.z
       value: 4.63
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798340, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798341, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970177, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: m_Name
       value: DoorTrigger
       objectReference: {fileID: 0}
-    - target: {fileID: 3095524726863798362, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+    - target: {fileID: 2070902010724970206, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: puzzleMemoCanvas
       value: 
       objectReference: {fileID: 1653383041}
+    - target: {fileID: 3911606343664243845, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: puzzleUI
+      value: 
+      objectReference: {fileID: 1653383041}
+    - target: {fileID: 3911606343664243845, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: spotLight
+      value: 
+      objectReference: {fileID: 1093736049}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6be8d0a4b23da874fa37bca5be2c73f6, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
 --- !u!1001 &7095929221142631719
 PrefabInstance:
   m_ObjectHideFlags: 0
