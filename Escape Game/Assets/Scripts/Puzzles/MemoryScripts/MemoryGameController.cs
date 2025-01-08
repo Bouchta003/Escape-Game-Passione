@@ -9,7 +9,7 @@ using TMPro;
 public class MemoryGameController : MonoBehaviour
 
 {
-    public UnityEvent onPuzzleComplete; // pour lancer puzzle Ali
+    //public UnityEvent onPuzzleComplete;  pour lancer puzzle Ali
 
     public Image supplyChainImage; // Image de la chaîne d'approvisionnement
     public Image periodicTableImage; // Image du tableau périodique
@@ -492,7 +492,7 @@ public class MemoryGameController : MonoBehaviour
             }
 
             // Appeler l'événement pour lancer le puzzle suivant
-            onPuzzleComplete.Invoke(); //Appel Puzzle Ali
+            //onPuzzleComplete.Invoke(); //Appel Puzzle Ali
         }
         else
         {
