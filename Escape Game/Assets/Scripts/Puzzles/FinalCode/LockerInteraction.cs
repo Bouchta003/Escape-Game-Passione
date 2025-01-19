@@ -1,48 +1,55 @@
 using UnityEngine;
+using System.Collections;
 
 public class LockerInteraction : MonoBehaviour, IInteractable
 {
+    #region Attributes
     [Header("Cameras")]
     [Tooltip("Reference to the main camera.")]
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] Camera mainCamera;
 
     [Tooltip("Reference to the keypad camera.")]
-    [SerializeField] private Camera keypadCamera;
+    [SerializeField] Camera keypadCamera;
 
     [Header("UI Elements")]
     [Tooltip("Canvas for the keypad.")]
-    [SerializeField] private GameObject keypadCanvas;
+    [SerializeField] GameObject keypadCanvas;
 
     [Tooltip("Reference to the 'Return' button.")]
-    [SerializeField] private GameObject returnButton;
+    [SerializeField] GameObject returnButton;
 
     [Header("Keypad Settings")]
     [Tooltip("Reference to the KeypadController script.")]
-    [SerializeField] private KeypadController keypadController;
+    [SerializeField] KeypadController keypadController;
 
     [Tooltip("Correct code for unlocking the locker.")]
-    [SerializeField] private string correctCode = "704";
+    [SerializeField] string correctCode = "704";
     public string CorrectCode => correctCode;
 
     [Header("Locker Animation")]
     [Tooltip("Animator for the locker.")]
-    [SerializeField] private Animator lockerAnimator;
+    [SerializeField] Animator lockerAnimator;
 
     [Header("Puzzle Elements")]
     [Tooltip("The USB Key to retrieve.")]
-    [SerializeField] private GameObject lootUSBKey;
+    [SerializeField] GameObject lootUSBKey;
 
 
-    private bool isInteracting = false;
+    bool isInteracting = false;
+    AudioSource audioSource;
+    #endregion
 
-    private void Start()
+    void Start()
     {
         // Ensure keypad UI elements are hidden at the start
         keypadCanvas.SetActive(false);
         returnButton.SetActive(false);
+
+        // Initialize AudioSource
+        audioSource = GetComponent<AudioSource>();
     }
 
-    private void Update()
+    void Update()
     {
         // Exit interaction with the locker when 'Q' is pressed
         if (isInteracting && Input.GetKeyDown(KeyCode.Q))
@@ -95,6 +102,7 @@ public class LockerInteraction : MonoBehaviour, IInteractable
         Debug.Log("Locker unlocked!");
         if (lockerAnimator != null)
         {
+            StartCoroutine(PlaySoundAndContinue());
             lockerAnimator.SetTrigger("LevelFinished");
             lootUSBKey.SetActive(true);
         }
@@ -109,7 +117,7 @@ public class LockerInteraction : MonoBehaviour, IInteractable
     /// <summary>
     /// Enables the cursor for user interaction.
     /// </summary>
-    private void EnableCursor()
+    void EnableCursor()
     {
         Cursor.lockState = CursorLockMode.None; // Unlock cursor
         Cursor.visible = true; // Make cursor visible
@@ -118,9 +126,34 @@ public class LockerInteraction : MonoBehaviour, IInteractable
     /// <summary>
     /// Disables the cursor to restore game control.
     /// </summary>
-    private void DisableCursor()
+    void DisableCursor()
     {
         Cursor.lockState = CursorLockMode.Locked; // Lock cursor
         Cursor.visible = false; // Hide cursor
     }
+
+    /// <summary>
+    /// Plays a sound clip and waits for it to finish before continuing.
+    /// </summary>
+    /// <param name="soundClip">The sound clip to play.</param>
+    /// <returns>An enumerator for coroutine control.</returns>
+    IEnumerator PlaySoundAndContinue()
+    {
+        if (audioSource != null)
+        {
+            // Assign and play the audio clip
+            AudioClip soundClip = audioSource.clip;
+            audioSource.Play();
+
+            // Wait for the duration of the audio clip
+            yield return new WaitForSeconds(soundClip.length);
+
+            Debug.Log("Sound finished! Continuing execution.");
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or AudioClip is missing.");
+        }
+    }
+
 }
