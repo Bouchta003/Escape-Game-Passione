@@ -1,20 +1,32 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using System.Collections;
 using TMPro;
 
+
+
 public class MemoryGameController : MonoBehaviour
+
 {
+    //public UnityEvent onPuzzleComplete;  pour lancer puzzle Ali
+
     public Image supplyChainImage; // Image de la chaîne d'approvisionnement
     public Image periodicTableImage; // Image du tableau périodique
     public Image numberSequenceImage; // Nouvelle référence pour la séquence de nombres (en tant qu'image)
-    public Image inutile1; // Image inutile 1 qui doit disparaître
     public Image inutile2; // Image inutile 2 qui doit disparaître
+
+    public GameObject[] panels; // Un tableau pour contenir vos panels
+
 
     public TextMeshProUGUI countdownText; // Référence au texte du compte à rebours
     public TextMeshProUGUI tapToContinueText; // Texte "Tap to Continue", qui sera ensuite utilisé pour afficher les questions
+    public TextMeshProUGUI questionText; // Texte dédié aux questions
+    public TextMeshProUGUI instructionText; // Texte Instructions
     public Button[] answerButtons; // Boutons pour les réponses
     public TMP_FontAsset bangersFont; // Référence à la police "Bangers-Regular SDF" que vous utilisez
+    public TMP_FontAsset digitalFont; // Police pour le compte à rebours
+
 
     public AudioClip countdownClip; // Clip audio pour le compte à rebours
     public AudioClip yayClip; // Clip audio pour la fin du quiz
@@ -25,17 +37,21 @@ public class MemoryGameController : MonoBehaviour
 
     private int currentQuestionIndex = 0; // Pour suivre quelle question est affichée
     private int correctAnswerCount = 0; // Compte le nombre de bonnes réponses
+    private int selectedButtonIndex = 0; // Index du bouton actuellement sélectionné
+    private bool canContinue = false; // Indique si le joueur peut continuer
+
+
 
     // Liste des questions et des réponses
     private string[] questions = {
-        "What number do you get from adding the height and the width of the battery shown?",
-        "In which stage are the cell manufacturers within the supply chain?",
-        "What is the atomic number of Nickel?"
+        "what were the height and width of the battery shown?",
+        "in which stage are the cell manufacturers within the supply chain?",
+        "what is the atomic number of Nickel?"
     };
 
     private string[][] answers = {
-        new string[] { "94.7", "90.7", "42.7" },
-        new string[] { "3rd", "4th", "2nd" },
+        new string[] { "61.5  and  33.2", "63.2  and  9.5", "61.5  and  9.5" },
+        new string[] { "2nd", "4th", "3rd" },
         new string[] { "14", "28", "7" }
     };
 
@@ -46,91 +62,321 @@ public class MemoryGameController : MonoBehaviour
         StartGame(); // Démarre le jeu au début
     }
 
-    void StartGame()
+    private void StartGame()
     {
         // Initialiser les propriétés de texte pour la police, la taille, et la couleur
         SetTextProperties();
 
-        // Initialiser l'état des éléments UI
-        tapToContinueText.gameObject.SetActive(false); // Désactiver le texte "Tap to Continue" au début
-        tapToContinueText.GetComponent<Button>().interactable = false; // Désactiver l'interaction
+        // Réinitialiser l'état des panels
+        foreach (GameObject panel in panels)
+        {
+            panel.SetActive(false); // Panels désactivés
+            CanvasGroup canvasGroup = panel.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 1f; // Réinitialiser l'opacité
+            }
+        }
 
-        // Désactiver les boutons de réponse au début
+        // Réinitialiser l'état des images
+        supplyChainImage.enabled = false;
+        supplyChainImage.color = new Color(1f, 1f, 1f, 1f); // Blanc opaque
+
+        periodicTableImage.enabled = false;
+        periodicTableImage.color = new Color(1f, 1f, 1f, 1f);
+
+        numberSequenceImage.enabled = false;
+        numberSequenceImage.color = new Color(1f, 1f, 1f, 1f);
+
+        inutile2.enabled = false;
+        inutile2.color = new Color(1f, 1f, 1f, 1f);
+
+        // Réinitialiser les boutons de réponse
         foreach (Button btn in answerButtons)
         {
             btn.gameObject.SetActive(false);
+            ColorBlock cb = btn.colors;
+            cb.normalColor = Color.white; // Réinitialiser à la couleur par défaut
+            btn.colors = cb;
         }
 
-        // Activer les images pour commencer
-        supplyChainImage.enabled = true;
-        periodicTableImage.enabled = true;
-        numberSequenceImage.enabled = true;
-        inutile1.enabled = true; // Activer l'image inutile1 au début
-        inutile2.enabled = true; // Activer l'image inutile2 au début
+        // Réinitialiser les textes
+        tapToContinueText.gameObject.SetActive(false);
+        tapToContinueText.text = "TAP TO CONTINUE";
+        tapToContinueText.fontSize = 36;
+        tapToContinueText.color = Color.white;
+        tapToContinueText.GetComponent<Button>().interactable = false;
+
+        questionText.gameObject.SetActive(false);
+        questionText.text = ""; // Vider le texte des questions
+        questionText.fontSize = questionFontSize;
+        questionText.color = Color.white;
+
+        countdownText.gameObject.SetActive(false); // Masquer le texte du compte à rebours
 
         // Réinitialiser le score et l'index de la question
         currentQuestionIndex = 0;
         correctAnswerCount = 0;
 
-        // Lancer le compte à rebours
-        StartCoroutine(CountdownThenShowTapToContinue(25)); // Compte à rebours de 20 secondes avant de masquer les images et afficher "TAP TO CONTINUE"
-
-        // Jouer le son de compte à rebours pendant 21 secondes
-        if (audioSource != null && countdownClip != null)
-        {
-            audioSource.clip = countdownClip;
-            audioSource.loop = true; // Boucle pour maintenir le son pendant 21 secondes
-            audioSource.Play();
-            Invoke("StopCountdownSound", 26f); // Arrêter le son de compte à rebours après 21 secondes
-        }
+        // Afficher les instructions
+        StartCoroutine(DisplayInstructions());
     }
+
+
+
 
     private void SetTextProperties()
     {
-        // Définir les propriétés de texte pour garantir la consistance
-        tapToContinueText.font = bangersFont; // Assure-toi que la police est bien définie à "Bangers-Regular SDF"
-        tapToContinueText.fontSize = 36; // Définir la taille du texte pour "TAP TO CONTINUE"
-        tapToContinueText.color = Color.white; // Définir la couleur du texte (par exemple, blanc)
-        tapToContinueText.fontStyle = FontStyles.Normal; // Peut être Normal, Bold, Italic, etc.
+        tapToContinueText.font = bangersFont;
+        tapToContinueText.fontSize = 36;
+        tapToContinueText.color = Color.white;
+        tapToContinueText.fontStyle = FontStyles.Normal;
     }
 
-    IEnumerator CountdownThenShowTapToContinue(int countdownTime)
+    IEnumerator DisplayInstructions()
     {
-        // Activer le texte du compte à rebours
+        // Activer le texte d'instructions
+        instructionText.gameObject.SetActive(true);
+        instructionText.fontSize = 36;
+        instructionText.color = Color.white;
+        instructionText.alignment = TextAlignmentOptions.Center;
+
+        RectTransform rectTransform = instructionText.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(1, 1);
+        rectTransform.offsetMin = Vector2.zero;
+        rectTransform.offsetMax = Vector2.zero;
+
+        string welcomeText = "How great is your memory ?";
+        string instructions = "\n\nInstructions:\n" +
+                              "1. Observe the following images carefully.\n" +
+                              "2. Answer the questions based on what you see.\n" +
+                              "3. Use arrow keys to navigate and spacebar to confirm.\n" +
+                              "\nGood luck!";
+
+        // Appliquer l'effet de fade-in pour le texte "Welcome"
+        instructionText.text = welcomeText; // Affecter le texte d'introduction
+        yield return StartCoroutine(FadeInText(instructionText, 1f)); // Appliquer le fade-in
+        yield return new WaitForSeconds(2f); // Attendre un moment
+
+        instructionText.text = instructions; // Affecter les instructions
+        yield return new WaitForSeconds(5f);
+
+        yield return StartCoroutine(FadeOutText(1f, instructionText)); // Appliquer le fade-out
+        instructionText.gameObject.SetActive(false); // Désactiver le texte après le fade-out
+
+        // Démarrer l'affichage des images et le compte à rebours
+        StartCoroutine(DisplayImagesAndCountdown(25));
+
+    }
+
+    IEnumerator FadeInText(TextMeshProUGUI textElement, float fadeDuration)
+    {
+        Color originalColor = textElement.color;
+        float elapsedTime = 0f;
+
+        // Réinitialiser la transparence à 0
+        textElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+
+        // Faire apparaître le texte progressivement
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+            textElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        // Assurer que l'alpha est à 1
+        textElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+    }
+
+
+
+    IEnumerator DisplayImagesAndCountdown(int countdownTime)
+    {
+        // Activer les images et panels
+        foreach (GameObject panel in panels)
+        {
+            panel.SetActive(true); // Les panels sont maintenant correctement réactivés
+        }
+        supplyChainImage.enabled = true;
+        periodicTableImage.enabled = true;
+        numberSequenceImage.enabled = true;
+        inutile2.enabled = true;
+
+        // Attendre un instant avant d'afficher le compte à rebours
+        yield return new WaitForSeconds(0.5f);
+
+        // Configurer et afficher le texte du compte à rebours
         countdownText.gameObject.SetActive(true);
+
+        // Lancer le son de compte à rebours
+        if (audioSource != null && countdownClip != null)
+        {
+            audioSource.clip = countdownClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
 
         // Lancer le compte à rebours
         while (countdownTime > 0)
         {
-            countdownText.text = "Time remaining: " + countdownTime + " seconds";
+            countdownText.text = "Time Left : " + countdownTime + " seconds";
             yield return new WaitForSeconds(1f);
             countdownTime--;
         }
 
-        // Désactiver le texte du compte à rebours une fois terminé
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
         countdownText.gameObject.SetActive(false);
 
-        // Masquer les images une fois le compte à rebours terminé
-        supplyChainImage.enabled = false;
-        periodicTableImage.enabled = false;
-        numberSequenceImage.enabled = false;
-        inutile1.enabled = false; // Masquer l'image inutile1 après le compte à rebours
-        inutile2.enabled = false; // Masquer l'image inutile2 après le compte à rebours
-
-        // Activer le texte "TAP TO CONTINUE" après que les images ont disparu
-        tapToContinueText.gameObject.SetActive(true);
-        tapToContinueText.text = "TAP TO CONTINUE";
-        tapToContinueText.font = bangersFont; // Redéfinir la police pour s'assurer que c'est bien Bangers
-        tapToContinueText.GetComponent<Button>().interactable = true; // Rendre le texte cliquable
-
-        // Ajouter l'événement pour déclencher OnTapToContinue lorsque l'utilisateur clique sur le texte
-        Button tapButton = tapToContinueText.GetComponent<Button>();
-        if (tapButton != null)
+        // Appliquer un fade-out aux panels et images
+        foreach (GameObject panel in panels)
         {
-            tapButton.onClick.RemoveAllListeners(); // Supprimer les anciens listeners s'il y en a
-            tapButton.onClick.AddListener(OnTapToContinue);
+            StartCoroutine(FadeOutPanel(panel, 1f));
+        }
+        StartCoroutine(FadeOutImage(supplyChainImage, 1f));
+        StartCoroutine(FadeOutImage(periodicTableImage, 1f));
+        StartCoroutine(FadeOutImage(numberSequenceImage, 1f));
+        StartCoroutine(FadeOutImage(inutile2, 1f));
+
+        yield return new WaitForSeconds(1f);
+
+        // Afficher "TAP TO CONTINUE"
+        tapToContinueText.gameObject.SetActive(true);
+        tapToContinueText.GetComponent<Button>().interactable = true;
+
+        // Rendre le texte réactif à la barre d'espace
+        canContinue = true;
+    }
+
+
+
+    IEnumerator FadeOutText(float fadeDuration, TextMeshProUGUI textElement)
+    {
+        Color originalColor = textElement.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            textElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        textElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+    }
+
+    IEnumerator FadeOutImage(Image image, float fadeDuration)
+    {
+        Color originalColor = image.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            image.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        // Assurez-vous que l'image est réactivée avec la pleine opacité
+        image.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+        image.enabled = false; // Laisser désactivé, mais prêt à être réactivé
+    }
+
+
+    IEnumerator FadeOutPanel(GameObject panel, float fadeDuration)
+    {
+        CanvasGroup canvasGroup = panel.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = panel.AddComponent<CanvasGroup>();
+        }
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            yield return null;
+        }
+
+        // Assurez-vous que le panel n'est pas désactivé après le fade-out
+        canvasGroup.alpha = 0f;
+        panel.SetActive(false);
+    }
+
+
+    private void OnTapToContinue()
+    {
+        Debug.Log("Tap to Continue activated!");
+
+        // Masquer le texte "Tap to Continue"
+        tapToContinueText.gameObject.SetActive(false);
+        tapToContinueText.GetComponent<Button>().interactable = false;
+
+        // Réinitialiser le flag
+        canContinue = false;
+
+        // Afficher la première question
+        ShowQuestion(currentQuestionIndex);
+    }
+
+
+
+
+    private void Update()
+    {
+        // Navigation avec les flèches gauche et droite
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            selectedButtonIndex = (selectedButtonIndex - 1 + answerButtons.Length) % answerButtons.Length; // Boucle vers le dernier bouton si on va à gauche
+            HighlightButton(selectedButtonIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            selectedButtonIndex = (selectedButtonIndex + 1) % answerButtons.Length; // Boucle vers le premier bouton si on va à droite
+            HighlightButton(selectedButtonIndex);
+        }
+
+        // Validation avec Enter ou la barre d’espace
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        {
+            answerButtons[selectedButtonIndex].onClick.Invoke(); // Simule un clic sur le bouton sélectionné
+        }
+
+        // Vérifier si l'utilisateur appuie sur la barre d'espace pour continuer
+        if (canContinue && Input.GetKeyDown(KeyCode.Space))
+        {
+            OnTapToContinue();
+            canContinue = false; // Désactiver le flag pour éviter les répétitions
         }
     }
+
+    private void HighlightButton(int index)
+    {
+        // Réinitialiser l'état des boutons (désactiver la surbrillance)
+        for (int i = 0; i < answerButtons.Length; i++)
+        {
+            ColorBlock cb = answerButtons[i].colors;
+            cb.normalColor = Color.white; // Couleur par défaut
+            answerButtons[i].colors = cb;
+        }
+
+        // Appliquer une couleur de surbrillance au bouton sélectionné
+        ColorBlock selectedColorBlock = answerButtons[index].colors;
+        selectedColorBlock.normalColor = Color.yellow; // Couleur de surbrillance
+        answerButtons[index].colors = selectedColorBlock;
+    }
+
+
 
     void StopCountdownSound()
     {
@@ -140,58 +386,61 @@ public class MemoryGameController : MonoBehaviour
         }
     }
 
-    void OnTapToContinue()
-    {
-        Debug.Log("Tap to Continue clicked!"); // Vérifie que cette méthode est bien appelée
-
-        // Désactiver l'interaction après l'appui
-        tapToContinueText.GetComponent<Button>().interactable = false;
-
-        // Utiliser `tapToContinueText` pour afficher la question suivante
-        ShowQuestion(currentQuestionIndex);
-    }
 
     void ShowQuestion(int questionIndex)
     {
-        Debug.Log("ShowQuestion called for question index: " + questionIndex); // Vérifie que ShowQuestion est bien appelée
+        Debug.Log("ShowQuestion called for question index: " + questionIndex);
 
-        tapToContinueText.gameObject.SetActive(true);
-        tapToContinueText.text = questions[questionIndex];
-        tapToContinueText.font = bangersFont; // Redéfinir la police pour s'assurer qu'elle est correcte
-        tapToContinueText.fontSize = questionFontSize; // Définir la taille de la police pour les questions
-        tapToContinueText.color = new Color(1f, 1f, 1f, 1f); // Assurer l'opacité totale du texte
+        HighlightButton(selectedButtonIndex);
+
+        // Afficher la question dans le texte dédié
+        questionText.gameObject.SetActive(true);
+        questionText.text = questions[questionIndex];
+        questionText.font = bangersFont;
+        questionText.fontSize = questionFontSize;
+        questionText.color = new Color(1f, 1f, 1f, 1f);
 
         // Configurer les boutons de réponse pour la question actuelle
         for (int i = 0; i < answerButtons.Length; i++)
         {
             if (i < answers[questionIndex].Length)
             {
-                Debug.Log("Configuring answer button: " + i); // Vérifie que les boutons de réponse sont bien configurés
+                Debug.Log("Configuring answer button: " + i);
                 answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answers[questionIndex][i];
                 answerButtons[i].gameObject.SetActive(true);
                 int answerIndex = i; // Pour éviter un problème de référence dans la closure
-                answerButtons[i].onClick.RemoveAllListeners(); // Supprime les anciens listeners
+                answerButtons[i].onClick.RemoveAllListeners();
                 answerButtons[i].onClick.AddListener(() => CheckAnswer(answerIndex == correctAnswers[questionIndex]));
             }
         }
     }
 
+
     void CheckAnswer(bool isCorrect)
     {
-        Debug.Log("CheckAnswer called - isCorrect: " + isCorrect); // Vérifie que cette méthode est bien appelée
+        Debug.Log("CheckAnswer called - isCorrect: " + isCorrect);
 
         if (isCorrect)
         {
             Debug.Log("Correct Answer!");
-            correctAnswerCount++; // Incrémenter le nombre de bonnes réponses
-            tapToContinueText.color = Color.green; // Feedback color pour une bonne réponse
+            correctAnswerCount++;
+
+            // Changer la couleur en vert transparent pour questionText
+            questionText.color = new Color(0f, 1f, 0f, 0.5f);
         }
         else
         {
             Debug.Log("Wrong Answer!");
-            tapToContinueText.color = Color.red; // Feedback color pour une mauvaise réponse
+
+            // Changer la couleur en rouge transparent pour questionText
+            questionText.color = new Color(1f, 0f, 0f, 0.5f);
         }
 
+        // Assurer que la couleur est visible
+        questionText.enabled = false;
+        questionText.enabled = true;
+
+        // Passer à la question suivante
         StartCoroutine(NextQuestion());
     }
 
@@ -204,15 +453,18 @@ public class MemoryGameController : MonoBehaviour
 
         if (currentQuestionIndex < questions.Length)
         {
-            tapToContinueText.color = Color.white; // Remettre la couleur du texte à blanc pour la prochaine question
+            // Remettre la couleur du texte à blanc pour la prochaine question
+            questionText.color = new Color(1f, 1f, 1f, 1f);
             ShowQuestion(currentQuestionIndex);
         }
         else
         {
             // Toutes les questions ont été posées
-            DisplayFinalScore(); // Afficher le score final
+            DisplayFinalScore();
         }
     }
+
+
 
     void DisplayFinalScore()
     {
@@ -222,41 +474,68 @@ public class MemoryGameController : MonoBehaviour
             btn.gameObject.SetActive(false);
         }
 
-        // Afficher le score final
+        // Afficher le texte pour le score final dans questionText
+        questionText.gameObject.SetActive(true);
+        questionText.fontSize = 50;
+        questionText.color = new Color(1f, 1f, 0f, 0.5f); // Jaune transparent
+
         if (correctAnswerCount == questions.Length)
         {
-            tapToContinueText.text = correctAnswerCount + "/" + questions.Length + " - You have unlocked the puzzle, here is the code!";
+            questionText.text = correctAnswerCount + "/" + questions.Length + " - You have unlocked the puzzle, here is the code!";
+
+            // Jouer le son de félicitations
+            if (audioSource != null && yayClip != null)
+            {
+                audioSource.clip = yayClip;
+                audioSource.Play();
+                Invoke("StopYaySound", 5f);
+            }
+
+            // Appeler l'événement pour lancer le puzzle suivant
+            //onPuzzleComplete.Invoke(); //Appel Puzzle Ali
         }
         else
         {
-            tapToContinueText.text = "Your Score: " + correctAnswerCount + "/" + questions.Length + "\nTry Again!";
-            StartCoroutine(RestartGameAfterDelay(3f)); // Relancer le jeu après 3 secondes
-        }
-
-        tapToContinueText.fontSize = 50; // Augmenter la taille de la police pour le score final, si nécessaire
-        tapToContinueText.color = Color.yellow; // Mettre la couleur du texte en jaune pour le score final
-
-        // Jouer le son de félicitations à la fin du quiz pendant 5 secondes
-        if (audioSource != null && yayClip != null && correctAnswerCount == questions.Length)
-        {
-            audioSource.clip = yayClip;
-            audioSource.Play();
-            Invoke("StopYaySound", 5f);
+            // Si le score est inférieur à 3/3, redémarrer le jeu après 3 secondes
+            questionText.text = "Your Score: " + correctAnswerCount + "/" + questions.Length + "\nTry Again!";
+            StartCoroutine(RestartGameAfterDelay(3f));
         }
     }
+
+
 
     IEnumerator RestartGameAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        StartGame(); // Relancer le jeu
-    }
+        Debug.Log("Restarting Game...");
 
-    void StopYaySound()
-    {
-        if (audioSource.isPlaying)
+        // Réactiver les panels et les images pour le nouveau jeu
+        foreach (GameObject panel in panels)
         {
-            audioSource.Stop();
+            panel.SetActive(true); // Panels réactivés
+            CanvasGroup canvasGroup = panel.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 1f; // Assurer la pleine opacité
+            }
         }
+        supplyChainImage.enabled = true;
+        periodicTableImage.enabled = true;
+        numberSequenceImage.enabled = true;
+        inutile2.enabled = true;
+
+        // Réinitialiser toutes les variables
+        currentQuestionIndex = 0;
+        correctAnswerCount = 0;
+
+        // Masquer les textes
+        questionText.gameObject.SetActive(false);
+        tapToContinueText.gameObject.SetActive(false);
+
+        // Relancer le jeu
+        StartGame();
     }
 }
+
+
 

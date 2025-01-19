@@ -14,7 +14,7 @@ public class RobotOutro : MonoBehaviour
     public Vector2 largeSize = new Vector2(120, 120); // Taille "grand"
 
     // Liste des indices qui déclenchent une taille "grande"
-    private HashSet<int> largeSizeMessages = new HashSet<int> { 2, 5, 6, 7, 9 };
+    private HashSet<int> largeSizeMessages = new HashSet<int> { 2, 4 };
 
     void Start()
     {

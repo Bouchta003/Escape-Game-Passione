@@ -9,9 +9,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] GameObject inventorySlots; // Parent object containing the slots
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject itemPrefab;
-    [SerializeField] GameObject inspectPanel;
-    [SerializeField] TextMeshProUGUI descriptionSlot;
-    
+
     [SerializeField] Slot anodeSlot; // Reference to the Anode Slot UI
     [SerializeField] Slot cathodeSlot; // Reference to the Cathode Slot UI
 
@@ -32,20 +30,19 @@ public class UI_Manager : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        pauseMenu.SetActive(!pauseMenu.activeSelf);
-
-        if (pauseMenu.activeSelf)
+        if (!pauseMenu.activeSelf)
         {
-            EnableCursor();
+            DisableCursor();
             Time.timeScale = 0;
         }
         else
         {
-            DisableCursor();
+            EnableCursor();
             Time.timeScale = 1;
         }
-    }
 
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+    }
 
     public void ToggleInventoryMenu()
     {
@@ -89,26 +86,13 @@ public class UI_Manager : MonoBehaviour
                 // Instantiate the prefab in the slot
                 GameObject instantiatedItem = Instantiate(itemPrefab, slot.transform);
                 instantiatedItem.name = item;
-                instantiatedItem.tag = "Stored";
+
                 // Set the text of the TextMeshPro component in the prefab
                 TextMeshProUGUI textComponent = instantiatedItem.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComponent != null)
                 {
                     textComponent.text = item; // Set the item's name as the text
                 }
-
-                Image itemImage = instantiatedItem.GetComponentInChildren<Image>();
-                Sprite itemSprite = null; // Replace with logic to get the item's sprite
-                if (itemImage != null)
-                {
-                    itemSprite = itemImage.sprite; // Use the prefab's sprite
-                }
-
-                InventoryItemHover hoverScript = instantiatedItem.AddComponent<InventoryItemHover>();
-                hoverScript.inspectPanel = inspectPanel; // Reference to your inspect panel
-                hoverScript.inspectImage = inspectPanel.GetComponent<Image>();
-                hoverScript.itemSprite = itemSprite; // Pass the item's sprite
-                hoverScript.Description = descriptionSlot;
 
                 // Add functionality to assign the item to a slot when clicked
                 Button button = instantiatedItem.GetComponentInChildren<Button>();

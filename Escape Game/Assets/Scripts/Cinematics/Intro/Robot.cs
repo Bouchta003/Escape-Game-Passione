@@ -14,7 +14,7 @@ public class Robot : MonoBehaviour
     public Vector2 largeSize = new Vector2(120, 120); // Taille "grand"
 
     // Liste des indices qui déclenchent une taille "grande"
-    private HashSet<int> largeSizeMessages = new HashSet<int> { 3, 4, 5, 9, 10, 11, 13, 14, 18, 19, 22 };
+    private HashSet<int> largeSizeMessages = new HashSet<int> { 6, 9, 14, 16 };
 
     void Start()
     {

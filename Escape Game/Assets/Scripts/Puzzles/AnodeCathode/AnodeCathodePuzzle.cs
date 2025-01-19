@@ -56,11 +56,12 @@ public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
         MaterialData anode = anodeSlot.AssignedMaterial;
         MaterialData cathode = cathodeSlot.AssignedMaterial;
 
+
+        string anodeName = anode.materialName;
+        string cathodeName = cathode.materialName;
+
         if (anode != null && cathode != null)
         {
-            string anodeName = anode.materialName;
-            string cathodeName = cathode.materialName;
-
             if (anodeName == "Graphite" && cathodeName == "Cobalt")
             {
                 Debug.Log("Correct Combination! Door Unlocks.");
