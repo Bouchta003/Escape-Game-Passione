@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
 {
@@ -25,6 +26,18 @@ public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
     [Tooltip("Canvas for the UI.")]
     [SerializeField] private GameObject slotsCanvas;
 
+    [Header("Sound Effects")]
+    AudioSource audioSource;
+
+    [Tooltip("Sound playing when scanning the chosen elements.")]
+    [SerializeField] private AudioClip scanningSound;
+
+    [Tooltip("Sound for failing the experiment.")]
+    [SerializeField] private AudioClip failSound;
+
+    [Tooltip("Sound for choosing the right elements.")]
+    [SerializeField] private AudioClip successSound;
+
     [Header("Unlockable Door")]
     [Tooltip("The door to unlock upon solving the puzzle.")]
     [SerializeField] GameObject unlockableDoor;
@@ -36,6 +49,8 @@ public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
     {
         // Ensure keypad UI elements are hidden at the start
         slotsCanvas.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -58,19 +73,7 @@ public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
 
         if (anode != null && cathode != null)
         {
-            string anodeName = anode.materialName;
-            string cathodeName = cathode.materialName;
-
-            if (anodeName == "Graphite" && cathodeName == "Cobalt")
-            {
-                Debug.Log("Correct Combination! Door Unlocks.");
-                ExitInteraction();
-                UnlockDoor();
-            }
-            else
-            {
-                Debug.Log("Combination is not optimal.");
-            }
+            StartCoroutine(PlaySoundsAndCheckCombination(anode, cathode));
         }
         else
         {
@@ -133,5 +136,60 @@ public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
     {
         Cursor.lockState = CursorLockMode.Locked; // Lock cursor
         Cursor.visible = false; // Hide cursor
+    }
+
+    /// <summary>
+    /// Plays sounds in sequence and checks the combination of anode and cathode materials.
+    /// </summary>
+    /// <param name="anode">The selected anode material.</param>
+    /// <param name="cathode">The selected cathode material.</param>
+    /// <returns>An enumerator for coroutine control.</returns>
+    IEnumerator PlaySoundsAndCheckCombination(MaterialData anode, MaterialData cathode)
+    {
+        // Play the scanning sound
+        yield return PlaySoundAndContinue(scanningSound);
+
+        // Get material names for comparison
+        string anodeName = anode.materialName;
+        string cathodeName = cathode.materialName;
+
+        if (anodeName == "Graphite" && cathodeName == "Cobalt")
+        {
+            // Play success sound and unlock the door
+            yield return PlaySoundAndContinue(successSound);
+            Debug.Log("Correct Combination! Door Unlocks.");
+            ExitInteraction();
+            UnlockDoor();
+        }
+        else
+        {
+            // Play failure sound
+            yield return PlaySoundAndContinue(failSound);
+            Debug.Log("Combination is not optimal.");
+        }
+    }
+
+    /// <summary>
+    /// Plays a sound clip and waits for it to finish before continuing.
+    /// </summary>
+    /// <param name="soundClip">The sound clip to play.</param>
+    /// <returns>An enumerator for coroutine control.</returns>
+    IEnumerator PlaySoundAndContinue(AudioClip soundClip)
+    {
+        if (audioSource != null && soundClip != null)
+        {
+            // Assign and play the audio clip
+            audioSource.clip = soundClip;
+            audioSource.Play();
+
+            // Wait for the duration of the audio clip
+            yield return new WaitForSeconds(soundClip.length);
+
+            Debug.Log("Sound finished! Continuing execution.");
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or AudioClip is missing.");
+        }
     }
 }
