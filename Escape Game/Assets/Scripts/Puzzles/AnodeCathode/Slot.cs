@@ -4,6 +4,7 @@ using TMPro;
 
 public class Slot : MonoBehaviour
 {
+    [Header("UI Elements")]
     [Tooltip("Type of slot (e.g., Anode or Cathode).")]
     public string slotType;
 
@@ -22,6 +23,20 @@ public class Slot : MonoBehaviour
     [Tooltip("Reference to the UI Manager.")]
     public UI_Manager uiManager;
 
+    [Header("Sound Effects")]
+    [Tooltip("Source to play sounds from")]
+    [SerializeField] AudioSource audioSource;
+
+    [Tooltip("Sound for picking an object of the wrong type")]
+    [SerializeField] AudioClip badObjectSound;
+
+    [Tooltip("Sound for picking an object of the right type")]
+    [SerializeField] AudioClip goodObjectSound;
+
+    [Tooltip("Sound for putting the object back to the inventory")]
+    [SerializeField] AudioClip clearSound;
+
+
     public void AssignMaterial(MaterialData material)
     {
         if (material != null && material.materialType == slotType)
@@ -30,6 +45,7 @@ public class Slot : MonoBehaviour
             if (Player_Inventory.inventory.Contains($"{material.materialName}_Mat"))
                 Player_Inventory.inventory.Remove($"{material.materialName}_Mat");
 
+            audioSource.PlayOneShot(goodObjectSound);
             AssignedMaterial = material;
             materialImage.sprite = material.icon; // Display the material icon
             plusButtonText.SetActive(false); // Hide '+'
@@ -39,6 +55,7 @@ public class Slot : MonoBehaviour
         }
         else
         {
+            audioSource.PlayOneShot(badObjectSound);
             Debug.Log($"Cannot assign material {material?.materialName ?? "None"} to {slotType} slot!");
         }
     }
@@ -54,11 +71,13 @@ public class Slot : MonoBehaviour
             }
 
             // Clear the assigned material
+            audioSource.PlayOneShot(clearSound);
             AssignedMaterial = null;
             materialImage.sprite = null;
             plusButtonText.SetActive(true); // Show '+'
             materialImage.enabled = false; // Hide the image
             materialText.text = ""; // Clear the material name
+
             Debug.Log("Slot cleared and material returned to inventory.");
         }
         else

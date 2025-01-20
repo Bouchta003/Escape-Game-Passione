@@ -959,6 +959,10 @@ MonoBehaviour:
   plusButtonText: {fileID: 274821480}
   materialText: {fileID: 531679267}
   uiManager: {fileID: 1788478661}
+  audioSource: {fileID: 1213258559}
+  badObjectSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
+  goodObjectSound: {fileID: 8300000, guid: 6ee052f7612dd8e49a6f6c94187d98d4, type: 3}
+  clearSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
 --- !u!1001 &66404167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15044,6 +15048,10 @@ MonoBehaviour:
   plusButtonText: {fileID: 16535779}
   materialText: {fileID: 1084786499}
   uiManager: {fileID: 1788478661}
+  audioSource: {fileID: 1213258559}
+  badObjectSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
+  goodObjectSound: {fileID: 8300000, guid: 6ee052f7612dd8e49a6f6c94187d98d4, type: 3}
+  clearSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
 --- !u!224 &1028866424
 RectTransform:
   m_ObjectHideFlags: 0

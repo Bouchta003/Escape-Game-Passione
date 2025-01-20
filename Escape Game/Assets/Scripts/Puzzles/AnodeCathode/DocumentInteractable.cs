@@ -20,6 +20,10 @@ public class DocumentInteractable : MonoBehaviour, IInteractable
         // documentUI.SetActive(true);
     }
 
+    /// <summary>
+    /// Gets sound to play when picking this item up.
+    /// </summary>
+    /// <returns>AudioClip of the sound to play.</returns>
     public AudioClip GetPickUpSound() => pickUpSound;
 
     public void CloseDocument()
