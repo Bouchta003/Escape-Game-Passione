@@ -1,49 +1,82 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StorableDetector : MonoBehaviour
 {
-    public GameObject prefabToInstantiate; // Assign your prefab in the Inspector
+    [Header("Prefab Settings")]
+    [Tooltip("Prefab to instantiate above detected objects.")]
+    [SerializeField] private GameObject prefabToInstantiate;
+
+    [Tooltip("Height offset for the instantiated prefab.")]
+    [SerializeField] private float prefabHeight = 2f;
+
     private GameObject currentPrefabInstance; // Tracks the currently instantiated prefab
     private GameObject currentStorableObject; // Tracks the current "Storable" object
-    [SerializeField] float prefabHeight = 2f;
+    private IInteractable currentInteractable; // Tracks the current interactable object
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Storable"))
+        // Check if the object is storable or interactable
+        bool isStorable = other.CompareTag("Storable");
+        bool isInteractable = other.TryGetComponent(out currentInteractable);
+
+        if (isStorable || isInteractable)
         {
-            // Destroy the existing prefab if it exists
+            // Destroy the existing prefab if one is already instantiated
             if (currentPrefabInstance != null)
             {
                 Destroy(currentPrefabInstance);
             }
 
-            // Instantiate a new prefab above the collided object
-            Vector3 spawnPosition = other.transform.position + Vector3.up * prefabHeight;
+            // Calculate the spawn position for the prefab
+            Renderer objectRenderer = other.GetComponent<Renderer>();
+            float objectHeight = objectRenderer != null ? objectRenderer.bounds.size.y : 0f;
+            Vector3 spawnPosition = other.transform.position + Vector3.up * (objectHeight / 2 + prefabHeight);
+
+            // Instantiate the prefab and track it
             currentPrefabInstance = Instantiate(prefabToInstantiate, spawnPosition, Quaternion.identity);
 
-            // Track the current storable object
-            currentStorableObject = other.gameObject;
+            // Track the storable object if applicable
+            if (isStorable)
+            {
+                currentStorableObject = other.gameObject;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Clear references when the object exits the trigger
+        currentInteractable = null;
+        currentStorableObject = null;
+
+        if (currentPrefabInstance != null)
+        {
+            Destroy(currentPrefabInstance);
+            currentPrefabInstance = null;
         }
     }
 
     private void Update()
     {
-        // Check if the E key is pressed and there's a storable object to destroy
+        // Handle interaction logic when the E key is pressed
         if (Input.GetKeyDown(KeyCode.E))
         {
+            // Add the storable object to the player's inventory and destroy it
             if (currentStorableObject != null)
             {
                 Player_Inventory.inventory.Add(currentStorableObject.name);
-                Destroy(currentStorableObject); // Destroy the storable object
-                currentStorableObject = null;  // Clear the reference
+                Destroy(currentStorableObject);
+                currentStorableObject = null;
             }
 
+            // Trigger interaction logic for interactable objects
+            currentInteractable?.Interact();
+
+            // Destroy the prefab if it exists
             if (currentPrefabInstance != null)
             {
-                Destroy(currentPrefabInstance); // Destroy the prefab
-                currentPrefabInstance = null;  // Clear the reference
+                Destroy(currentPrefabInstance);
+                currentPrefabInstance = null;
             }
         }
     }
