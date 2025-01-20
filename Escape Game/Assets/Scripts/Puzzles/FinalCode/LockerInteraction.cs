@@ -76,6 +76,8 @@ public class LockerInteraction : MonoBehaviour, IInteractable
         EnableCursor();
     }
 
+    public AudioClip GetPickUpSound() => null;
+
     /// <summary>
     /// Ends the interaction with the locker and resets the view.
     /// </summary>

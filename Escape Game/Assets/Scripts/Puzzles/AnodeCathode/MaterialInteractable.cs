@@ -9,4 +9,6 @@ public class MaterialInteractable : MonoBehaviour, IInteractable
         Debug.Log($"Interacted with: {materialData.materialName}");
         // Add logic to pick up or place the material
     }
+
+    public AudioClip GetPickUpSound() => null;
 }

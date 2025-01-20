@@ -12,6 +12,12 @@ public class StorableDetector : MonoBehaviour
     private GameObject currentPrefabInstance; // Tracks the currently instantiated prefab
     private GameObject currentStorableObject; // Tracks the current "Storable" object
     private IInteractable currentInteractable; // Tracks the current interactable object
+    AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -64,6 +70,8 @@ public class StorableDetector : MonoBehaviour
             // Add the storable object to the player's inventory and destroy it
             if (currentStorableObject != null)
             {
+                AudioClip pickUpClip = currentInteractable.GetPickUpSound();
+                if (pickUpClip != null) audioSource.PlayOneShot(pickUpClip);
                 Player_Inventory.inventory.Add(currentStorableObject.name);
                 Destroy(currentStorableObject);
                 currentStorableObject = null;

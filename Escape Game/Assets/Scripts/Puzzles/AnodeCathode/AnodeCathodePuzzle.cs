@@ -95,6 +95,8 @@ public class AnodeCathodePuzzle : MonoBehaviour, IInteractable
         EnableCursor();
     }
 
+    public AudioClip GetPickUpSound() => null;
+
     public void ExitInteraction()
     {
         if (!isInteracting) return; // Only exit if currently interacting
