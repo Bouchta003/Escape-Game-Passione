@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3088,11 +3088,11 @@ PrefabInstance:
     - target: {fileID: 2070902010724970206, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: puzzleMemoCanvas
       value: 
-      objectReference: {fileID: 7974946704950165695, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      objectReference: {fileID: 313658501}
     - target: {fileID: 3911606343664243845, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: puzzleUI
       value: 
-      objectReference: {fileID: 7974946704950165695, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      objectReference: {fileID: 313658501}
     - target: {fileID: 3911606343664243845, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
       propertyPath: spotLight
       value: 
@@ -3489,6 +3489,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 9040234486394500222, guid: 827062553953ace449df65073bc88caa, type: 3}
   m_PrefabInstance: {fileID: 308336603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &313658501 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7974946704950165695, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+  m_PrefabInstance: {fileID: 525877476}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &336441411
 PrefabInstance:
@@ -6047,6 +6052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jammo_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3541754002163558908, guid: bd6ee82c5e06b3f4f86113cbf8261ae1, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3772228501605983572, guid: bd6ee82c5e06b3f4f86113cbf8261ae1, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.8345693
@@ -7202,6 +7211,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2528327074000149298, guid: 3f4814451272e874f9d7dc1534b22b63, type: 3}
   m_PrefabInstance: {fileID: 523844714}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &525877476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165695, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_Name
+      value: PuzzleMemo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7974946704950165695, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652803659945251458, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.218872
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
 --- !u!1001 &531223798
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class DoorTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Something entered the trigger.");
+        Debug.Log(other.gameObject.name);
 
         if (other.CompareTag("Player")) // Check if it's the Player
         {
