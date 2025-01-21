@@ -16,12 +16,15 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] Slot cathodeSlot; // Reference to the Cathode Slot UI
 
     Slot activeSlot; // The slot that requested the inventory
+    AudioSource audioSource;
 
     void Start()
     {
         MaterialDatabase.InitializeDatabase(); // Automatically load materials
         pauseMenu.SetActive(false);
         inventoryMenu.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume");
     }
 
     void Update()
@@ -105,6 +108,7 @@ public class UI_Manager : MonoBehaviour
                 }
 
                 InventoryItemHover hoverScript = instantiatedItem.AddComponent<InventoryItemHover>();
+                hoverScript.hoverSound = GetComponent<AudioSource>();
                 hoverScript.inspectPanel = inspectPanel; // Reference to your inspect panel
                 hoverScript.inspectImage = inspectPanel.GetComponent<Image>();
                 hoverScript.itemSprite = itemSprite; // Pass the item's sprite

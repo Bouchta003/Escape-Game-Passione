@@ -9,6 +9,7 @@ public class InventoryItemHover : MonoBehaviour, IPointerEnterHandler, IPointerE
     public Image inspectImage; // The Image component on the inspect panel
     public Sprite itemSprite; // The sprite of the item
     public TextMeshProUGUI Description; // Reference to the TMP component
+    public AudioSource hoverSound;
     private string info;
     private void UpdateInfo()
     {
@@ -160,6 +161,7 @@ public class InventoryItemHover : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (inspectPanel != null && inspectImage != null && Description != null)
         {
+            hoverSound.Play();
             inspectPanel.SetActive(true);
             inspectImage.sprite = itemSprite;
             UpdateInfo();

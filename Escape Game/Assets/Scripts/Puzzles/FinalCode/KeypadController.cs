@@ -1,21 +1,34 @@
 using UnityEngine;
+using System.Collections;
 using TMPro;
 
 public class KeypadController : MonoBehaviour
 {
+    #region Attributes
     [Header("UI Components")]
     [Tooltip("Text field to display the entered code.")]
-    [SerializeField] private TMP_Text codeDisplay;
+    [SerializeField] TMP_Text codeDisplay;
 
     [Header("Locker Interaction")]
     [Tooltip("Reference to the locker interaction script.")]
-    [SerializeField] private LockerInteraction lockerInteraction;
+    [SerializeField] LockerInteraction lockerInteraction;
+
+    [Header("Sound Effects")]
+    [Tooltip("Source to output the sound.")]
+    [SerializeField] AudioSource audioSource;
+
+    [Tooltip("Sound for incorrect code input")]
+    [SerializeField] AudioClip failSound;
+
+    [Tooltip("Sound for successful code input")]
+    [SerializeField] AudioClip successSound;
 
     [Header("Code Settings")]
     [Tooltip("Maximum allowed code length.")]
-    [SerializeField] private int maxCodeLength = 3;
+    [SerializeField] int maxCodeLength = 3;
 
-    private string enteredCode = ""; // Stores the currently entered code
+    string enteredCode = ""; // Stores the currently entered code
+    #endregion
 
     /// <summary>
     /// Adds a digit to the entered code and updates the display.
@@ -37,13 +50,11 @@ public class KeypadController : MonoBehaviour
     {
         if (enteredCode == lockerInteraction.CorrectCode)
         {
-            Debug.Log("Correct code entered! Unlocking locker...");
-            lockerInteraction.UnlockLocker();
+            StartCoroutine(UnlockLocker());
         }
         else
         {
-            Debug.Log("Incorrect code entered!");
-            ResetCode();
+            StartCoroutine(ProcessWrongInput());
         }
     }
 
@@ -59,7 +70,7 @@ public class KeypadController : MonoBehaviour
     /// <summary>
     /// Updates the displayed code in the UI.
     /// </summary>
-    private void UpdateCodeDisplay()
+    void UpdateCodeDisplay()
     {
         if (codeDisplay != null)
         {
@@ -71,7 +82,53 @@ public class KeypadController : MonoBehaviour
         }
     }
 
-    private void OnValidate()
+    /// <summary>
+    /// Launches a process when the player gets the right code.
+    /// </summary>
+    /// <returns>An enumerator for coroutine control.</returns>
+    IEnumerator UnlockLocker() {
+        yield return PlaySoundAndContinue(successSound);
+        Debug.Log("Correct code entered! Unlocking locker...");
+        lockerInteraction.UnlockLocker();
+    }
+
+    /// <summary>
+    /// Plays a sound effect letting the player know that the input is wrong
+    /// </summary>
+    /// <returns>An enumerator for coroutine control.</returns>
+    IEnumerator ProcessWrongInput()
+    {
+        yield return PlaySoundAndContinue(failSound);
+        Debug.Log("Incorrect code entered!");
+        ResetCode();
+    }
+
+    /// <summary>
+    /// Plays a sound clip and waits for it to finish before continuing.
+    /// </summary>
+    /// <param name="soundClip">The sound clip to play.</param>
+    /// <returns>An enumerator for coroutine control.</returns>
+    IEnumerator PlaySoundAndContinue(AudioClip soundClip)
+    {
+        if (audioSource != null && soundClip != null)
+        {
+            // Assign and play the audio clip
+            audioSource.clip = soundClip;
+            audioSource.Play();
+
+            // Wait for the duration of the audio clip
+            yield return new WaitForSeconds(soundClip.length);
+
+            Debug.Log("Sound finished! Continuing execution.");
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or AudioClip is missing.");
+        }
+    }
+
+
+    void OnValidate()
     {
         // Ensures maxCodeLength is positive during editing
         if (maxCodeLength < 1)

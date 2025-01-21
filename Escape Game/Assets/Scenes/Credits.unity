@@ -590,7 +590,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Assets used :'
+  m_text: "Assets used :\n\nAUDIO\n- Soundscape and Ambient Music Pack: LOST by MakotoHiramatsu,
+    CC BY 4.0 \u2013 https://makotohiramatsu.itch.io/lost\n- RETRO SOUNDS by DASK,
+    CC BY 4.0 \u2013 https://dagurasusk.itch.io/retrosounds\n- locker opening:closing
+    by Pr3tzelz (Freesound), Pixabay Content Licence \u2013 https://pixabay.com/sound-effects/locker-openingclosing-40866/\n-
+    Paper Rustle by BenjaminNelan (Freesound), Pixabay Content Licence \u2013 https://pixabay.com/sound-effects/paper-rustle-81855/\n-
+    take-it by User1994 (Freesound), Pixabay Content Licence \u2013 https://pixabay.com/sound-effects/take-it-90781/"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}
   m_sharedMaterial: {fileID: 21809785584020342, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}

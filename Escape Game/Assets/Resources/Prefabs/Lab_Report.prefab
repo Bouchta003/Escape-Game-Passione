@@ -340,6 +340,7 @@ MonoBehaviour:
 
 '
   reportContent: {fileID: 4030696568771828851}
+  pickUpSound: {fileID: 8300000, guid: 89dd486017f552043a7ba4377b4e783b, type: 3}
 --- !u!65 &1945170969684329895
 BoxCollider:
   m_ObjectHideFlags: 0
