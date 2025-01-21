@@ -964,10 +964,10 @@ MonoBehaviour:
   plusButtonText: {fileID: 274821480}
   materialText: {fileID: 531679267}
   uiManager: {fileID: 1788478661}
-  audioSource: {fileID: 0}
-  badObjectSound: {fileID: 0}
-  goodObjectSound: {fileID: 0}
-  clearSound: {fileID: 0}
+  audioSource: {fileID: 1213258559}
+  badObjectSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
+  goodObjectSound: {fileID: 8300000, guid: 92abb2197a4c3104aa219a7f0fcf0cd8, type: 3}
+  clearSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
 --- !u!1001 &66404167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15333,10 +15333,10 @@ MonoBehaviour:
   plusButtonText: {fileID: 16535779}
   materialText: {fileID: 1084786499}
   uiManager: {fileID: 1788478661}
-  audioSource: {fileID: 0}
-  badObjectSound: {fileID: 0}
-  goodObjectSound: {fileID: 0}
-  clearSound: {fileID: 0}
+  audioSource: {fileID: 1213258559}
+  badObjectSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
+  goodObjectSound: {fileID: 8300000, guid: 92abb2197a4c3104aa219a7f0fcf0cd8, type: 3}
+  clearSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
 --- !u!224 &1028866424
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16687,9 +16687,9 @@ MonoBehaviour:
   mainCamera: {fileID: 825535260}
   slotsCamera: {fileID: 1757548052}
   slotsCanvas: {fileID: 1850099318}
-  scanningSound: {fileID: 0}
-  failSound: {fileID: 0}
-  successSound: {fileID: 0}
+  scanningSound: {fileID: 8300000, guid: ed64356387de9da47b524e7bd39c16bd, type: 3}
+  failSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
+  successSound: {fileID: 8300000, guid: 92abb2197a4c3104aa219a7f0fcf0cd8, type: 3}
   unlockableDoor: {fileID: 58397429}
 --- !u!1001 &1126460450
 PrefabInstance:
@@ -26839,8 +26839,8 @@ MonoBehaviour:
   inventorySlots: {fileID: 410582120}
   pauseMenu: {fileID: 738340240}
   itemPrefab: {fileID: 6255516478497085298, guid: 4339cd3f1ce406f46a271433235cfe35, type: 3}
-  inspectPanel: {fileID: 0}
-  descriptionSlot: {fileID: 0}
+  inspectPanel: {fileID: 2082204209}
+  descriptionSlot: {fileID: 891196983}
   anodeSlot: {fileID: 62234289}
   cathodeSlot: {fileID: 1028866423}
 --- !u!82 &1788478662
