@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorTrigger : MonoBehaviour
 {
     public GameObject puzzleMemoCanvas; // Reference to the Canvas
+    [SerializeField] MemoryGameController gameController;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,6 +21,7 @@ public class DoorTrigger : MonoBehaviour
             {
                 puzzleMemoCanvas.SetActive(true);
                 Debug.Log("PuzzleMemo Canvas activated.");
+                gameController.StartGame();
             }
             else
             {

@@ -70,8 +70,11 @@ public class StorableDetector : MonoBehaviour
             // Add the storable object to the player's inventory and destroy it
             if (currentStorableObject != null)
             {
-                AudioClip pickUpClip = currentInteractable.GetPickUpSound();
-                if (pickUpClip != null) audioSource.PlayOneShot(pickUpClip);
+                if (currentInteractable != null)
+                {
+                    AudioClip pickUpClip = currentInteractable.GetPickUpSound();
+                    if (pickUpClip != null) audioSource.PlayOneShot(pickUpClip);                    
+                }
                 Player_Inventory.inventory.Add(currentStorableObject.name);
                 Destroy(currentStorableObject);
                 currentStorableObject = null;
