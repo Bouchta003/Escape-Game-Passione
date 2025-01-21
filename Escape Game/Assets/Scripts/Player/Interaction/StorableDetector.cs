@@ -65,7 +65,7 @@ public class StorableDetector : MonoBehaviour
     private void Update()
     {
         // Handle interaction logic when the E key is pressed
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             // Add the storable object to the player's inventory and destroy it
             if (currentStorableObject != null)
