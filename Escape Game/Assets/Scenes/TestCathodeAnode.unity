@@ -806,6 +806,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 115324, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
   m_PrefabInstance: {fileID: 2060819505}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &58397434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 415124, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
+  m_PrefabInstance: {fileID: 2060819505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &61132012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23549,6 +23554,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3591733319825752939, guid: a53f591064baf7f4f85f4cd31ffe3d84, type: 3}
   m_PrefabInstance: {fileID: 1603510068}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1606553774
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 58397434}
+    m_Modifications:
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970176, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970177, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: m_Name
+      value: DoorTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070902010724970206, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
+      propertyPath: puzzleMemoCanvas
+      value: 
+      objectReference: {fileID: 7974946704950165695, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f04cbfee1cdfd84890307baea825cee, type: 3}
 --- !u!1 &1618702900
 GameObject:
   m_ObjectHideFlags: 0
@@ -27980,9 +28046,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add6fa28b95d0c74796615f2b5835cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  codeDisplay: {fileID: 745882048}
-  lockerInteraction: {fileID: 8316152590857357343}
-  maxCodeLength: 3
 --- !u!1001 &1927590666
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30758,14 +30821,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7863429e6d18b1349bb766cb3ab3adfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 825535260}
-  keypadCamera: {fileID: 1988968237}
-  keypadCanvas: {fileID: 1987637485}
-  returnButton: {fileID: 803278497}
-  keypadController: {fileID: 1911540722}
-  correctCode: 704
-  lockerAnimator: {fileID: 8316152590857357342}
-  lootUSBKey: {fileID: 139588069}
 --- !u!65 &8316152590857357346
 BoxCollider:
   m_ObjectHideFlags: 0
