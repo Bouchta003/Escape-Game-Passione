@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialData: {fileID: 11400000, guid: 3f9bf520a633d57489b88a99dcd0dae5, type: 2}
-  pickUpSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  pickUpSound: {fileID: 0}
 --- !u!65 &37068259
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -964,10 +964,10 @@ MonoBehaviour:
   plusButtonText: {fileID: 274821480}
   materialText: {fileID: 531679267}
   uiManager: {fileID: 1788478661}
-  audioSource: {fileID: 1213258559}
-  badObjectSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
-  goodObjectSound: {fileID: 8300000, guid: 6ee052f7612dd8e49a6f6c94187d98d4, type: 3}
-  clearSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  audioSource: {fileID: 0}
+  badObjectSound: {fileID: 0}
+  goodObjectSound: {fileID: 0}
+  clearSound: {fileID: 0}
 --- !u!1001 &66404167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6903,7 +6903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialData: {fileID: 11400000, guid: 1af0cf23a607a154e8eee71aed164790, type: 2}
-  pickUpSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  pickUpSound: {fileID: 0}
 --- !u!65 &521843730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7224,6 +7224,86 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875963498274922738, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 875963498274922738, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 875963498274922738, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 875963498274922738, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 412
+      objectReference: {fileID: 0}
+    - target: {fileID: 875963498274922738, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 209
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441707812971604448, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441707812971604448, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441707812971604448, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441707812971604448, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -432
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441707812971604448, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 213
+      objectReference: {fileID: 0}
+    - target: {fileID: 7521840755972550956, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.9688438
+      objectReference: {fileID: 0}
+    - target: {fileID: 7521840755972550956, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9688438
+      objectReference: {fileID: 0}
+    - target: {fileID: 7521840755972550956, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.9688438
+      objectReference: {fileID: 0}
+    - target: {fileID: 7521840755972550956, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 420
+      objectReference: {fileID: 0}
+    - target: {fileID: 7521840755972550956, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692033241592135775, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692033241592135775, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692033241592135775, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.968844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692033241592135775, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -420
+      objectReference: {fileID: 0}
+    - target: {fileID: 7692033241592135775, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -282
+      objectReference: {fileID: 0}
     - target: {fileID: 7974946704950165694, guid: 3eed336c92270374881a2ace576bc4b9, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -9213,7 +9293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialData: {fileID: 11400000, guid: 383e4bc8f5c9aea43bb8e8a0bdaf4802, type: 2}
-  pickUpSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  pickUpSound: {fileID: 0}
 --- !u!65 &682838151
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12728,7 +12808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialData: {fileID: 11400000, guid: b2d04bf036edc7741bf376d7455c6657, type: 2}
-  pickUpSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  pickUpSound: {fileID: 0}
 --- !u!65 &837738644
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15253,10 +15333,10 @@ MonoBehaviour:
   plusButtonText: {fileID: 16535779}
   materialText: {fileID: 1084786499}
   uiManager: {fileID: 1788478661}
-  audioSource: {fileID: 1213258559}
-  badObjectSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
-  goodObjectSound: {fileID: 8300000, guid: 6ee052f7612dd8e49a6f6c94187d98d4, type: 3}
-  clearSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  audioSource: {fileID: 0}
+  badObjectSound: {fileID: 0}
+  goodObjectSound: {fileID: 0}
+  clearSound: {fileID: 0}
 --- !u!224 &1028866424
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16607,9 +16687,9 @@ MonoBehaviour:
   mainCamera: {fileID: 825535260}
   slotsCamera: {fileID: 1757548052}
   slotsCanvas: {fileID: 1850099318}
-  scanningSound: {fileID: 8300000, guid: ed64356387de9da47b524e7bd39c16bd, type: 3}
-  failSound: {fileID: 8300000, guid: ffddb6e32c1fafa468409ea793a403df, type: 3}
-  successSound: {fileID: 8300000, guid: 92abb2197a4c3104aa219a7f0fcf0cd8, type: 3}
+  scanningSound: {fileID: 0}
+  failSound: {fileID: 0}
+  successSound: {fileID: 0}
   unlockableDoor: {fileID: 58397429}
 --- !u!1001 &1126460450
 PrefabInstance:
@@ -25386,7 +25466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialData: {fileID: 11400000, guid: bb8a1231bbcb5844988c429c21438974, type: 2}
-  pickUpSound: {fileID: 8300000, guid: 6a99b601982589446a0434b4e98447a9, type: 3}
+  pickUpSound: {fileID: 0}
 --- !u!65 &1718929325
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26759,8 +26839,8 @@ MonoBehaviour:
   inventorySlots: {fileID: 410582120}
   pauseMenu: {fileID: 738340240}
   itemPrefab: {fileID: 6255516478497085298, guid: 4339cd3f1ce406f46a271433235cfe35, type: 3}
-  inspectPanel: {fileID: 2082204209}
-  descriptionSlot: {fileID: 891196983}
+  inspectPanel: {fileID: 0}
+  descriptionSlot: {fileID: 0}
   anodeSlot: {fileID: 62234289}
   cathodeSlot: {fileID: 1028866423}
 --- !u!82 &1788478662
@@ -27217,7 +27297,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1818763407
 GameObject:
