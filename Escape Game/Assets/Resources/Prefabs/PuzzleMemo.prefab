@@ -477,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 17.654785, y: 2.2189026}
+  m_AnchoredPosition: {x: 17.654785, y: 2.218872}
   m_SizeDelta: {x: -58.7857, y: -81.9522}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7759754146063910326
@@ -1868,6 +1868,7 @@ MonoBehaviour:
   audioSource: {fileID: 7974946704264744496}
   displayTime: 10
   questionFontSize: 40
+  backgroundPanel: {fileID: 2882710515593242441}
 --- !u!82 &7974946704264744496
 AudioSource:
   m_ObjectHideFlags: 0

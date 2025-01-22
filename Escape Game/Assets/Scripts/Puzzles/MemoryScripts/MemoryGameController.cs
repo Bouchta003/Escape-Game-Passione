@@ -40,6 +40,10 @@ public class MemoryGameController : MonoBehaviour
     private int selectedButtonIndex = 0; // Index du bouton actuellement sélectionné
     private bool canContinue = false; // Indique si le joueur peut continuer
 
+    public GameObject backgroundPanel; // Référence au BackgroundPanel
+
+
+
 
 
     // Liste des questions et des réponses
@@ -155,6 +159,7 @@ public class MemoryGameController : MonoBehaviour
                               "\nGood luck!";
 
         // Appliquer l'effet de fade-in pour le texte "Welcome"
+        instructionText.fontSize = 44; // Changez 50 par la taille souhaitée
         instructionText.text = welcomeText; // Affecter le texte d'introduction
         yield return StartCoroutine(FadeInText(instructionText, 1f)); // Appliquer le fade-in
         yield return new WaitForSeconds(2f); // Attendre un moment
@@ -195,6 +200,13 @@ public class MemoryGameController : MonoBehaviour
 
     IEnumerator DisplayImagesAndCountdown(int countdownTime)
     {
+
+        // Ne rien faire si le puzzle est déjà terminé
+        if (WallCode.Success)
+        {
+            yield break; // Arrêter l'exécution
+        }
+
         // Activer les images et panels
         foreach (GameObject panel in panels)
         {
@@ -464,7 +476,29 @@ public class MemoryGameController : MonoBehaviour
         }
     }
 
+    private void DisableAllPanels()
+    {
+        foreach (GameObject panel in panels)
+        {
+            CanvasGroup canvasGroup = panel.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0f; // Masquer avec opacité
+            }
+            panel.SetActive(false); // Désactiver complètement le panel
+        }
+    }
 
+    private void StopAudio()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+    }
+
+
+   
 
     void DisplayFinalScore()
     {
@@ -487,10 +521,24 @@ public class MemoryGameController : MonoBehaviour
             {
                 audioSource.clip = yayClip;
                 audioSource.Play();
-                Invoke("StopYaySound", 5f);
+                Invoke("StopAudio", 3f); // Arrêter le son après 3 secondes
+
             }
             tapToContinueText.text = correctAnswerCount + "/" + questions.Length + " - You have unlocked the puzzle, here is the code!";
             WallCode.Success = true;
+
+            // Désactiver immédiatement le BackgroundPanel
+            if (backgroundPanel != null)
+            {
+                backgroundPanel.SetActive(false);
+                Debug.Log("BackgroundPanel désactivé car le joueur a terminé.");
+            }
+
+            // Désactiver le canvas ou les éléments spécifiques après un délai
+            StartCoroutine(HideCanvasAfterDelay(3f));
+
+            // Désactiver tous les panels
+            DisableAllPanels();
         }
         else
         {
@@ -500,12 +548,48 @@ public class MemoryGameController : MonoBehaviour
         }
     }
 
+    // Coroutine pour désactiver le canvas après un délai
+    IEnumerator HideCanvasAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Désactiver les éléments (canvas, texte, etc.)
+        questionText.gameObject.SetActive(false);
+        tapToContinueText.gameObject.SetActive(false);
+
+        // Désactiver les panels
+        DisableAllPanels();
+
+        // Désactiver le Canvas principal
+        if (backgroundPanel != null)
+        {
+            backgroundPanel.SetActive(false);
+            Debug.Log("BackgroundPanel désactivé.");
+        }
+
+        // Arrêter le son
+        StopAudio();
+
+        // Ajoutez d'autres éléments à désactiver si nécessaire
+    }
+
 
 
     IEnumerator RestartGameAfterDelay(float delay)
     {
+
         yield return new WaitForSeconds(delay);
         Debug.Log("Restarting Game...");
+
+        // Réinitialiser l'état du puzzle avant de redémarrer
+        WallCode.Success = false;
+
+        // Désactiver le BackgroundPanel
+        if (backgroundPanel != null)
+        {
+            backgroundPanel.SetActive(false);
+            Debug.Log("BackgroundPanel désactivé.");
+        }
 
         // Réactiver les panels et les images pour le nouveau jeu
         foreach (GameObject panel in panels)
