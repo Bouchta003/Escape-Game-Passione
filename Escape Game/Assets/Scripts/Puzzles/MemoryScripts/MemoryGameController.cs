@@ -483,16 +483,14 @@ public class MemoryGameController : MonoBehaviour
         {
             questionText.text = correctAnswerCount + "/" + questions.Length + " - You have unlocked the puzzle, here is the code!";
 
-            // Jouer le son de félicitations
             if (audioSource != null && yayClip != null)
             {
                 audioSource.clip = yayClip;
                 audioSource.Play();
                 Invoke("StopYaySound", 5f);
             }
-
-            // Appeler l'événement pour lancer le puzzle suivant
-            //onPuzzleComplete.Invoke(); //Appel Puzzle Ali
+            tapToContinueText.text = correctAnswerCount + "/" + questions.Length + " - You have unlocked the puzzle, here is the code!";
+            WallCode.Success = true;
         }
         else
         {

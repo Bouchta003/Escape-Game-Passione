@@ -10,7 +10,7 @@ public class WallCode : MonoBehaviour
 
     //This string list will be changeable in the editor for test purposes
     [SerializeField] List<string> codeSequence = new List<string>();
-    public bool Success = true;
+    public static bool Success = false;
 
     //The parent game object (wall) with all its childs (X.Y) where X is the row and Y the column of the brick.
     [SerializeField] GameObject _wall;
@@ -36,9 +36,6 @@ public class WallCode : MonoBehaviour
     }
     private void Update()
     {
-        //Condition to verify if the necessary previous puzzles were completed, if they were show the code. (For testing purposes pressing 'E' key will trigger the code)
-        if (Input.GetKeyDown(KeyCode.W))
-        { Success = true; }
         if (Success) { 
             if (_wall != null)
             {
