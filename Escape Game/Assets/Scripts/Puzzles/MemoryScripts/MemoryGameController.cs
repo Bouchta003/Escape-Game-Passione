@@ -39,6 +39,8 @@ public class MemoryGameController : MonoBehaviour
     private int correctAnswerCount = 0; // Compte le nombre de bonnes réponses
     private int selectedButtonIndex = 0; // Index du bouton actuellement sélectionné
     private bool canContinue = false; // Indique si le joueur peut continuer
+    private bool isRestarting = false; // Indique si le jeu est en cours de redémarrage
+
 
     public GameObject backgroundPanel; // Référence au BackgroundPanel
 
@@ -82,18 +84,18 @@ public class MemoryGameController : MonoBehaviour
             }
         }
 
+        // Réactiver le BackgroundPanel
+        if (backgroundPanel != null)
+        {
+            backgroundPanel.SetActive(true);
+            Debug.Log("BackgroundPanel réactivé.");
+        }
+
         // Réinitialiser l'état des images
         supplyChainImage.enabled = false;
-        supplyChainImage.color = new Color(1f, 1f, 1f, 1f); // Blanc opaque
-
         periodicTableImage.enabled = false;
-        periodicTableImage.color = new Color(1f, 1f, 1f, 1f);
-
         numberSequenceImage.enabled = false;
-        numberSequenceImage.color = new Color(1f, 1f, 1f, 1f);
-
         inutile2.enabled = false;
-        inutile2.color = new Color(1f, 1f, 1f, 1f);
 
         // Réinitialiser les boutons de réponse
         foreach (Button btn in answerButtons)
@@ -127,6 +129,14 @@ public class MemoryGameController : MonoBehaviour
     }
 
 
+    IEnumerator StartWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Afficher la première question
+        ShowQuestion(currentQuestionIndex);
+    }
+
 
 
     private void SetTextProperties()
@@ -159,7 +169,7 @@ public class MemoryGameController : MonoBehaviour
                               "\nGood luck!";
 
         // Appliquer l'effet de fade-in pour le texte "Welcome"
-        instructionText.fontSize = 44; // Changez 50 par la taille souhaitée
+        instructionText.fontSize = 44; // Taille souhaitée
         instructionText.text = welcomeText; // Affecter le texte d'introduction
         yield return StartCoroutine(FadeInText(instructionText, 1f)); // Appliquer le fade-in
         yield return new WaitForSeconds(2f); // Attendre un moment
@@ -170,10 +180,15 @@ public class MemoryGameController : MonoBehaviour
         yield return StartCoroutine(FadeOutText(1f, instructionText)); // Appliquer le fade-out
         instructionText.gameObject.SetActive(false); // Désactiver le texte après le fade-out
 
-        // Démarrer l'affichage des images et le compte à rebours
-        StartCoroutine(DisplayImagesAndCountdown(25));
+        // Lancer les images et le compte à rebours (25 secondes)
+        yield return StartCoroutine(DisplayImagesAndCountdown(25));
 
+        // Afficher "Tap to Continue" après le compte à rebours
+        ///ShowTapToContinue();
     }
+
+
+
 
     IEnumerator FadeInText(TextMeshProUGUI textElement, float fadeDuration)
     {
@@ -361,14 +376,15 @@ public class MemoryGameController : MonoBehaviour
         // Validation avec Enter ou la barre d’espace
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
-            answerButtons[selectedButtonIndex].onClick.Invoke(); // Simule un clic sur le bouton sélectionné
-        }
+            // Si "Tap to Continue" est actif, masquer et continuer
+            if (canContinue)
+            {
+                OnTapToContinue();
+                return;
+            }
 
-        // Vérifier si l'utilisateur appuie sur la barre d'espace pour continuer
-        if (canContinue && Input.GetKeyDown(KeyCode.Space))
-        {
-            OnTapToContinue();
-            canContinue = false; // Désactiver le flag pour éviter les répétitions
+            // Sinon, simuler un clic sur le bouton sélectionné
+            answerButtons[selectedButtonIndex].onClick.Invoke();
         }
     }
 
@@ -467,14 +483,17 @@ public class MemoryGameController : MonoBehaviour
         {
             // Remettre la couleur du texte à blanc pour la prochaine question
             questionText.color = new Color(1f, 1f, 1f, 1f);
+
+            // Afficher la prochaine question
             ShowQuestion(currentQuestionIndex);
         }
         else
         {
-            // Toutes les questions ont été posées
+            // Toutes les questions ont été posées, afficher le score final
             DisplayFinalScore();
         }
     }
+
 
     private void DisableAllPanels()
     {
@@ -577,44 +596,48 @@ public class MemoryGameController : MonoBehaviour
 
     IEnumerator RestartGameAfterDelay(float delay)
     {
-
         yield return new WaitForSeconds(delay);
         Debug.Log("Restarting Game...");
 
-        // Réinitialiser l'état du puzzle avant de redémarrer
-        WallCode.Success = false;
+        // Activer le flag de redémarrage
+        isRestarting = true;
 
-        // Désactiver le BackgroundPanel
+        // Réinitialiser l'état du puzzle avant de redémarrer
+        WallCode.Success = false; // Réinitialiser le succès du puzzle
+        Debug.Log("WallCode.Success réinitialisé à false.");
+
+        // Réactiver le BackgroundPanel
         if (backgroundPanel != null)
         {
-            backgroundPanel.SetActive(false);
-            Debug.Log("BackgroundPanel désactivé.");
+            backgroundPanel.SetActive(true);
+            Debug.Log("BackgroundPanel réactivé pour le redémarrage.");
         }
 
-        // Réactiver les panels et les images pour le nouveau jeu
-        foreach (GameObject panel in panels)
+
+        // Réinitialiser les boutons de réponse
+        foreach (Button btn in answerButtons)
         {
-            panel.SetActive(true); // Panels réactivés
-            CanvasGroup canvasGroup = panel.GetComponent<CanvasGroup>();
-            if (canvasGroup != null)
-            {
-                canvasGroup.alpha = 1f; // Assurer la pleine opacité
-            }
+            btn.gameObject.SetActive(false);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = ""; // Effacer le texte des boutons
+            btn.onClick.RemoveAllListeners(); // Supprimer les anciens listeners pour éviter les doublons
         }
-        supplyChainImage.enabled = true;
-        periodicTableImage.enabled = true;
-        numberSequenceImage.enabled = true;
-        inutile2.enabled = true;
 
-        // Réinitialiser toutes les variables
-        currentQuestionIndex = 0;
-        correctAnswerCount = 0;
+        // Réinitialiser toutes les variables du jeu
+        currentQuestionIndex = 0; // Réinitialiser l'indice des questions
+        correctAnswerCount = 0; // Réinitialiser le score
 
         // Masquer les textes
         questionText.gameObject.SetActive(false);
         tapToContinueText.gameObject.SetActive(false);
 
+        // Ajouter un délai avant de relancer le jeu
+        yield return new WaitForSeconds(1f);
+
+        // Désactiver le flag de redémarrage
+        isRestarting = false;
+
         // Relancer le jeu
         StartGame();
     }
+
 }
