@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TranslationCredits : MonoBehaviour
 {
     // Vitesse de translation en unités par seconde
-    private float vitesse = 60f;
+    private float vitesse = 100f;
 
     // Update est appelé une fois par frame
     void Update()
