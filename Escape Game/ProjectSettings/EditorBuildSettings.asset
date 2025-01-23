@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Intro.unity
     guid: 39bb568bf6bba304b91699ad61f880ad
   - enabled: 1
-    path: Assets/Scenes/TestCathodeAnode.unity
+    path: Assets/Scenes/MainLevel.unity
     guid: b2527ee51dcde6a45be4355a34019b22
   - enabled: 1
     path: Assets/Scenes/Outro.unity
