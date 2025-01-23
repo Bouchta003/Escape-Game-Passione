@@ -175,13 +175,13 @@ public class MemoryGameController : MonoBehaviour
         yield return new WaitForSeconds(2f); // Attendre un moment
 
         instructionText.text = instructions; // Affecter les instructions
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
 
         yield return StartCoroutine(FadeOutText(1f, instructionText)); // Appliquer le fade-out
         instructionText.gameObject.SetActive(false); // Désactiver le texte après le fade-out
 
-        // Lancer les images et le compte à rebours (25 secondes)
-        yield return StartCoroutine(DisplayImagesAndCountdown(25));
+        // Lancer les images et le compte à rebours (20 secondes)
+        yield return StartCoroutine(DisplayImagesAndCountdown(20));
 
         // Afficher "Tap to Continue" après le compte à rebours
         ///ShowTapToContinue();
