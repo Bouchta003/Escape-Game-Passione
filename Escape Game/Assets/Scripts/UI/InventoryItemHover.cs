@@ -78,16 +78,16 @@ public class InventoryItemHover : MonoBehaviour, IPointerEnterHandler, IPointerE
                     "**Discussion:**\n" +
                     "Today's discussion revolved around identifying the most effective materials for enhancing battery cycle life.\n" +
                     "We tested multiple combinations, but the pairing of a stable **carbon-based material** (graphite) for the anode and\n" +
-                    "a **lightweight metallic element** (lithium) consistently delivered superior results. Dr. Amari emphasized the\n" +
+                    "a **lightweight metallic element** (cobalt) consistently delivered superior results. Dr. Amari emphasized the\n" +
                     "importance of selecting materials that ensure thermal stability during high-demand cycles.\n\n" +
 
                     "**Results:**\n" +
                     "- **Combination 1:** Manganese + Carbon: High efficiency, poor thermal stability.\n" +
-                    "- **Combination 2:** Lithium + Graphite: Optimal cycle performance and stability.\n" +
+                    "- **Combination 2:** Cobalt + Graphite: Optimal cycle performance and stability.\n" +
                     "- **Combination 3:** Nickel + Copper: High safety but insufficient energy density.\n\n" +
 
                     "**Conclusion:**\n" +
-                    "Graphite and lithium demonstrated unmatched compatibility for the anode's role. Further cathode combinations are\n" +
+                    "Graphite and cobalt demonstrated unmatched compatibility for the anode's role. Further cathode combinations are\n" +
                     "being considered to maximize energy storage.";
                 break;
             case "Lab_Report (3) [H]":
